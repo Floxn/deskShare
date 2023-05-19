@@ -46,9 +46,6 @@ export default {
   },
   methods: {
     handleForm() {
-      // event.preventDefault()
-      console.log('Form send')
-
       fetch('http://localhost:3000/rooms', {
         method: 'POST',
         headers: {
@@ -64,6 +61,21 @@ export default {
         })
         .catch((error) => console.error(error))
     }
+
+    /*    TODO Mentoring funktinoiert und schreibt einen neun DB Eintrag. Nur wie bekomm ich die felder wieder zurückgesetzt?
+      async handleForm() {
+      const response = await fetch('http://localhost:3000/rooms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.formData)
+      })
+      const { formData: name, floor, noiseLevel } = await response.json()
+      this.name = name
+      this.floor = floor
+      this.noiseLevel = noiseLevel
+    }*/
   }
 }
 </script>
