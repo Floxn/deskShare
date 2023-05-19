@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Max",
+      "lastname": "Mustermann",
+      "isAdmin": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "some comment",
+      "floor": 1,
+      "noiseLevel": "medium"
+    }
+  ],
+  "desks": [
+    {
+      "id": 1,
+      "roomId": 1,
+      "displays": "2x LG Monitore",
+      "dockingstation": "HP 2G"
+    }
+  ]
+}
