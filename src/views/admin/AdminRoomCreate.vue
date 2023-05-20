@@ -1,35 +1,37 @@
 <template>
-  <div>
-    <h1>Create Room</h1>
-    <form @submit.prevent="handleForm">
-      <div>
-        <label for="name">Name</label>
-        <input id="name" type="text" v-model="formData.name" />
-        <pre>
-        {{ $data }}
-          </pre
-        >
+  <div class="container">
+    <div class="row room-create">
+      <div class="column">
+        <h1 class="room-create_title">Create Room</h1>
+        <form @submit.prevent="handleForm" class="room-create_form">
+          <fieldset>
+            <div class="room-create_name">
+              <label for="name">Name</label>
+              <input id="name" type="text" v-model="formData.name" />
+            </div>
+            <div class="room-create_floor">
+              <label for="floor">Stockwerk</label>
+              <select name="floor" id="floor" v-model="formData.floor">
+                <option value="">-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div class="room-create_noiselevel">
+              <label for="noiselevel">Lautstärke</label>
+              <select name="noiselevel" id="noiselevel" v-model="formData.noiseLevel">
+                <option value="">-</option>
+                <option value="silent">leise</option>
+                <option value="normal">normal</option>
+                <option value="loud">laut</option>
+              </select>
+            </div>
+            <button class="button">Raum hinzufügen</button>
+          </fieldset>
+        </form>
       </div>
-      <div>
-        <label for="floor">Stockwerk</label>
-        <select name="floor" id="floor" v-model="formData.floor">
-          <option value="">-</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-      </div>
-      <div>
-        <label for="noiselevel">Lautstärke</label>
-        <select name="noiselevel" id="noiselevel" v-model="formData.noiseLevel">
-          <option value="">-</option>
-          <option value="silent">leise</option>
-          <option value="normal">normal</option>
-          <option value="loud">laut</option>
-        </select>
-      </div>
-      <button>send</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -80,4 +82,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'milligram';
+</style>
