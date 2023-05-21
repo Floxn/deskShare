@@ -6,7 +6,7 @@
 export default {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 /*  import normalize.css
     https://github.com/necolas/normalize.css/
 */

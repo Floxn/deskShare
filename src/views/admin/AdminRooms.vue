@@ -1,9 +1,19 @@
 <template>
-  <div class="room" v-for="rooms in roomsData">
-    <h2 class="room-title">{{ rooms.name }}</h2>
-    {{ rooms.id }}
-    {{ rooms.noiseLevel }}
-    <button class="edit">edit</button>
+  <div class="container">
+    <div class="row">
+      <div class="column room" v-for="room in roomsData">
+        <h2 class="room-title">
+          {{ room.name }}
+        </h2>
+        <div class="room-id">
+          {{ room.id }}
+        </div>
+        <div class="room-noiselevel">
+          {{ room.noiseLevel }}
+        </div>
+        <button class="button edit">edit</button>
+      </div>
+    </div>
   </div>
 </template>
 
