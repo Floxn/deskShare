@@ -15,4 +15,9 @@ export default {}
     https://milligram.io/
 */
 @import 'milligram';
+
+/*
+import main.scss
+*/
+@import 'assets/main.scss';
 </style>

@@ -37,4 +37,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.room {
+  background-color: hsl(0 0 24%);
+}
+</style>
