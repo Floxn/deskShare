@@ -1,7 +1,10 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="column room" v-for="room in roomsData">
+  <div class="rooms-wrapper">
+    <div class="rooms-head">
+      <h2 class="rooms-title">Rooms</h2>
+    </div>
+    <div class="rooms">
+      <div class="room" v-for="room in roomsData">
         <h2 class="room-title">
           {{ room.name }}
         </h2>
@@ -38,7 +41,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/variables';
+
+.rooms {
+  @supports (not (grid-template-columns: subgrid)) {
+    display: flex;
+    flex-direction: column;
+  }
+  @supports (grid-template-columns: subgrid) {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 100px;
+    gap: 1rem;
+  }
+  &-head {
+    border-bottom: 1px solid $primary-color;
+  }
+}
 .room {
-  background-color: hsl(0 0 24%);
+  display: grid;
+  align-items: center;
+  transition: $transition;
+
+  @supports (not (grid-template-columns: subgrid)) {
+    grid-template-columns: 2fr 1fr 1fr 100px;
+    margin-bottom: 1rem;
+  }
+  @supports (grid-template-columns: subgrid) {
+    grid-column: 1 / 5;
+    grid-template-columns: subgrid;
+    &-title {
+      grid-column: 1 / 2;
+    }
+
+    &-id {
+      grid-column: 2 / 3;
+    }
+
+    &-noiselevel {
+      grid-column: 3 / 4;
+    }
+
+    button {
+      grid-column: 4 / 5;
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    cursor: pointer;
+    @include linear-gradient;
+  }
 }
 </style>

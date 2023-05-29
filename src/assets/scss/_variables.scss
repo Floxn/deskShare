@@ -1,7 +1,25 @@
+// Colors
 $background-color: hsl(0 0% 17%);
 $background-color-lighter: hsl(0 0% 24%);
 $base-color: hsl(0 0% 95%);
 $primary-color: hsl(220 55% 55%);
 
+@mixin linear-gradient {
+background: linear-gradient(90deg, $background-color-lighter 0%, $background-color-lighter 50%, hsl(220 25% 25%) 100%);
+}
+
+
 // Fonts
 $base-font: 'Michroma';
+
+// Font Sizes
+$base-font-size: 1rem;
+
+$line-height: 1.2em;
+$line-height-headline: 1.5em;
+
+// Transitions
+$transition: .25s ease-in-out all;
+
+// Spaces
+$spacer: 1rem;

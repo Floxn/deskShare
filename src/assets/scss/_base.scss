@@ -2,8 +2,11 @@ body {
   background-color: $background-color;
   color: $base-color;
   font-family: 'Michroma', 'ui-monospace', 'sans-serif';
+  font-size: $base-font-size;
+  line-height: $line-height;
 }
 
-button, button.button {
-  background-color: $primary-color;
+h1, h2, h3, h4, h5, h6 {
+  color: $primary-color;
+  line-height: $line-height-headline;
 }

@@ -1,0 +1,15 @@
+button {
+  appearance: unset;
+  padding: 1em 1.5em;
+  cursor: pointer;
+  transition: $transition;
+  background-color: $primary-color;
+  border: unset;
+  &:hover, &:focus-visible {
+    background-color: darken($primary-color, 5%);
+  }
+
+  &:focus {
+
+  }
+}
