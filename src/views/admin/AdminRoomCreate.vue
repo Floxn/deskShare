@@ -2,14 +2,17 @@
   <div class="container">
     <div class="row room-create">
       <div class="column">
-        <h1 class="room-create_title">Create Room</h1>
-        <form @submit.prevent="handleForm" class="room-create_form">
+        <!--
+        TODO Mentoring: Schreibt man für die H1 besser einen Compnente die man dann an der Stelle einfügt? Bzw. sollte der Grundaufbau vom Layout her immer gleich sein. Der findet dann außerhalb dieser Componente statt, wie wird der Seitentiel dann übergeben? Also wenn Z.B. in der <APP> der Grundaufbau wäre
+-->
+        <h1 class="page-title">Create Room</h1>
+        <form @submit.prevent="handleForm" class="room-create-form">
           <fieldset>
-            <div class="room-create_name">
+            <div class="room-create-name">
               <label for="name">Name</label>
               <input id="name" type="text" v-model="formData.name" />
             </div>
-            <div class="room-create_floor">
+            <div class="room-create-floor">
               <label for="floor">Stockwerk</label>
               <select name="floor" id="floor" v-model="formData.floor">
                 <option value="">-</option>
@@ -18,7 +21,7 @@
                 <option value="3">3</option>
               </select>
             </div>
-            <div class="room-create_noiselevel">
+            <div class="room-create-noiselevel">
               <label for="noiselevel">Lautstärke</label>
               <select name="noiselevel" id="noiselevel" v-model="formData.noiseLevel">
                 <option value="">-</option>
@@ -64,7 +67,7 @@ export default {
         .catch((error) => console.error(error))
     }
 
-    /*    TODO Mentoring funktinoiert und schreibt einen neun DB Eintrag. Nur wie bekomm ich die felder wieder zurückgesetzt?
+    /*    TODO Mentoring: funktioniert und schreibt einen neun DB Eintrag. Nur wie bekomm ich die Felder wieder zurückgesetzt?
       async handleForm() {
       const response = await fetch('http://localhost:3000/rooms', {
         method: 'POST',

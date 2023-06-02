@@ -10,6 +10,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/typo',
+      name: 'typo',
+      component: () => import('@/views/typo.vue')
+    },
+    {
       path: '/admin',
       name: 'admin',
       // route level code-splitting

@@ -1,10 +1,13 @@
 button {
   appearance: unset;
-  padding: 1em 1.5em;
+  padding: .25em 1.5em;
   cursor: pointer;
   transition: $transition;
   background-color: $primary-color;
   border: unset;
+  border-radius: $border-radius;
+  font-size: .875rem;
+  color: $background-color;
   &:hover, &:focus-visible {
     background-color: darken($primary-color, 5%);
   }

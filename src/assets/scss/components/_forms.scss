@@ -10,6 +10,7 @@ textarea,{
   box-sizing: border-box;
   padding: .5em 1em;
   border: unset;
+  border-radius: $border-radius;
   background-color: $background-color-lighter;
   margin-bottom: 1.4em;
 }

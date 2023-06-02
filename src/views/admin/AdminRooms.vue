@@ -1,15 +1,18 @@
 <template>
   <div class="rooms-wrapper">
-    <div class="rooms-head">
-      <h2 class="rooms-title">Rooms</h2>
-    </div>
+    <h1 class="page-title">Rooms</h1>
     <div class="rooms">
+      <div class="rooms-head">
+        <div class="rooms-title">Name</div>
+        <div class="rooms-floor">Stockwerk</div>
+        <div class="rooms-noiselevel">Lautstärke</div>
+      </div>
       <div class="room" v-for="room in roomsData">
         <h2 class="room-title">
           {{ room.name }}
         </h2>
-        <div class="room-id">
-          {{ room.id }}
+        <div class="room-floor">
+          {{ room.floor }}
         </div>
         <div class="room-noiselevel">
           {{ room.noiseLevel }}
@@ -44,45 +47,77 @@ export default {
 @import '@/assets/scss/variables';
 
 .rooms {
+  --_grid-template-columns: 2fr 1fr 1fr 100px;
+  --_gap: $spacer;
+  --_column-title: 1 / 2;
+  --_column-floor: 2 / 3;
+  --_column-noiselevel: 3 / 4;
+  --_column-button: 4 / 5;
+
   @supports (not (grid-template-columns: subgrid)) {
     display: flex;
     flex-direction: column;
   }
   @supports (grid-template-columns: subgrid) {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 100px;
-    gap: 1rem;
+    grid-template-columns: var(--_grid-template-columns);
+    gap: var(--_gap);
   }
   &-head {
+    display: grid;
+    grid-template-columns: var(--_grid-template-columns);
+    gap: var(--_gap);
+    align-items: baseline;
+    padding-bottom: calc($spacer * 0.5);
+    margin-bottom: calc($spacer * 2);
     border-bottom: 1px solid $primary-color;
+    color: $primary-color;
+  }
+  &-title {
+    grid-column: var(--_column-title);
+    font-size: $h2-font-size;
+  }
+
+  &-floor {
+    grid-column: var(--_column-floor);
+  }
+
+  &-noiselevel {
+    grid-column: var(--_column-noiselevel);
   }
 }
+
 .room {
   display: grid;
   align-items: center;
   transition: $transition;
+  padding-block: calc($spacer / 2);
+
+  &-title {
+    font-size: $h3-font-size;
+  }
 
   @supports (not (grid-template-columns: subgrid)) {
-    grid-template-columns: 2fr 1fr 1fr 100px;
+    grid-template-columns: var(--_grid-template-columns);
     margin-bottom: 1rem;
   }
   @supports (grid-template-columns: subgrid) {
     grid-column: 1 / 5;
     grid-template-columns: subgrid;
     &-title {
-      grid-column: 1 / 2;
+      grid-column: var(--_column-title);
     }
 
-    &-id {
-      grid-column: 2 / 3;
+    &-floor {
+      grid-column: var(--_column-floor);
     }
 
     &-noiselevel {
-      grid-column: 3 / 4;
+      grid-column: var(--_column-noiselevel);
     }
 
     button {
-      grid-column: 4 / 5;
+      grid-column: var(--_column-button);
     }
   }
 

@@ -15,11 +15,23 @@ $base-font: 'Michroma';
 // Font Sizes
 $base-font-size: 1rem;
 
+$h1-font-size: $base-font-size * 4;
+$h2-font-size: $base-font-size * 2.5;
+$h3-font-size: $base-font-size * 1.25;
+$h4-font-size: $base-font-size * 1;
+$h5-font-size: $base-font-size * .85;
+$h6-font-size: $base-font-size * .75;
+
+
 $line-height: 1.2em;
 $line-height-headline: 1.5em;
 
 // Transitions
 $transition: .25s ease-in-out all;
 
-// Spaces
+// Sizes
 $spacer: 1rem;
+
+// Border
+$border: 1px solid;
+$border-radius: 2px;
