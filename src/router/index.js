@@ -38,9 +38,14 @@ const router = createRouter({
       component: () => import('@/views/admin/AdminRooms.vue')
     },
     {
-      path: '/admin/rooms/create',
-      name: 'admin-rooms-create',
+      path: '/admin/room/create',
+      name: 'admin-room-create',
       component: () => import('@/views/admin/AdminRoomCreate.vue')
+    },
+    {
+      path: '/admin/desk/create',
+      name: 'admin-desk-create',
+      component: () => import('@/views/admin/AdminDeskCreate.vue')
     }
   ]
 })
