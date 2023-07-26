@@ -43,6 +43,11 @@ const router = createRouter({
       component: () => import('@/views/admin/AdminRoomCreate.vue')
     },
     {
+      path: '/admin/desks',
+      name: 'admin-desks',
+      component: () => import('@/views/admin/AdminDesks.vue')
+    },
+    {
       path: '/admin/desk/create',
       name: 'admin-desk-create',
       component: () => import('@/views/admin/AdminDeskCreate.vue')
