@@ -1,4 +1,5 @@
 <template>
+  <navigation />
   <div class="container">
     <div class="row room-create">
       <div class="column">
@@ -39,6 +40,8 @@
 </template>
 
 <script>
+import Navigation from '@/views/components/Navigation.vue'
+
 export default {
   data() {
     return {
@@ -48,6 +51,9 @@ export default {
         noiseLevel: ''
       }
     }
+  },
+  components: {
+    navigation: Navigation
   },
   methods: {
     handleForm() {

@@ -2,29 +2,36 @@
 die Lösung sieht smarter aus. Den gewollten Raum mit .filter herausnehmen
 https://stackoverflow.com/questions/60715099/how-can-i-implement-v-for-with-v-if?rq=3
 -->
-
-<template v-for="room in roomsData">
-  <div class="room" v-if="room.id === roomQueryId">
-    <h1 class="room-title">
-      {{ room.name }}
-    </h1>
-    <div class="room-floor">
-      {{ room.floor }}
+<template>
+  <navigation />
+  <template v-for="room in roomsData">
+    <div class="room" v-if="room.id === roomQueryId">
+      <h1 class="room-title">
+        {{ room.name }}
+      </h1>
+      <div class="room-floor">
+        {{ room.floor }}
+      </div>
+      <div class="room-noiselevel">
+        {{ room.noiseLevel }}
+      </div>
+      <button class="button edit">edit</button>
     </div>
-    <div class="room-noiselevel">
-      {{ room.noiseLevel }}
-    </div>
-    <button class="button edit">edit</button>
-  </div>
+  </template>
 </template>
 
 <script>
+import Navigation from '@/views/components/Navigation.vue'
+
 export default {
   data() {
     return {
       roomsData: [],
       roomQueryId: undefined
     }
+  },
+  components: {
+    navigation: Navigation
   },
   methods: {
     async getRooms() {

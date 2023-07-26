@@ -1,4 +1,5 @@
 <template>
+  <navigation />
   <div>
     <div class="headlines">
       <h1>Headline H1</h1>
@@ -32,7 +33,12 @@
 </template>
 
 <script>
-export default {}
+import Navigation from '@/views/components/Navigation.vue'
+export default {
+  components: {
+    navigation: Navigation
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

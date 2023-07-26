@@ -1,4 +1,5 @@
 <template>
+  <navigation />
   <div class="container">
     <div class="row room-create">
       <div class="column">
@@ -21,6 +22,7 @@
 <script>
 import RoomsList from '@/views/components/RoomsList.vue'
 import DesksList from '@/views/components/DesksList.vue'
+import Navigation from '@/views/components/Navigation.vue'
 
 export default {
   data() {
@@ -31,7 +33,8 @@ export default {
   },
   components: {
     'rooms-list': RoomsList,
-    'desks-list': DesksList
+    'desks-list': DesksList,
+    navigation: Navigation
   },
   methods: {
     async getRooms() {
