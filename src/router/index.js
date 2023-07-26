@@ -28,6 +28,11 @@ const router = createRouter({
       component: () => import('@/views/admin/AdminDashboardView.vue')
     },
     {
+      path: '/admin/dashboard',
+      name: 'admin-dashboard',
+      component: () => import('@/views/admin/AdminDashboardView.vue')
+    },
+    {
       path: '/admin/rooms',
       name: 'admin-rooms',
       component: () => import('@/views/admin/AdminRooms.vue')

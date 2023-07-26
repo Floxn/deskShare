@@ -1,7 +1,7 @@
 main {
   max-width:80vw;
-  margin-left: clamp(4rem, 10vw, 15rem);
-  margin-top: clamp(4rem, 10vw, 15rem);
+  margin-left: clamp(4rem,4rem,4rem); //(4rem, 10vw, 15rem)
+  margin-top: clamp(4rem,4rem,4rem); //(4rem, 10vw, 15rem)
 }
 
 .page-title {
