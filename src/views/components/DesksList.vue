@@ -4,7 +4,8 @@
       <div class="desks-title">Name</div>
       <div class="desk-displays">Displays</div>
       <div class="desks-dockingstation">Dockingstation</div>
-      <div class="desks-special-information">Dockingstation</div>
+      <div class="desks-special-information">Extra Info</div>
+      <div class="desks-room-id">Raum</div>
     </div>
     <div class="desk" v-for="desk in desksData">
       <h2 class="desk-title">
@@ -18,6 +19,9 @@
       </div>
       <div class="desk-special-information">
         {{ desk.specialInformation }}
+      </div>
+      <div class="desk-room-id">
+        {{ desk.roomId }}
       </div>
       <button class="button edit">edit</button>
     </div>
@@ -49,13 +53,14 @@ export default {
 @import '@/assets/scss/variables';
 
 .desks {
-  --_grid-template-columns: 2fr 1fr 1fr 1fr 100px;
+  --_grid-template-columns: 2fr 1fr 1fr 1fr 1fr 100px;
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-displays: 2 / 3;
   --_column-dockingstation: 3 / 4;
   --_column-special-information: 4 / 5;
-  --_column-button: 5 / 6;
+  --_column-room-id: 5 / 6;
+  --_column-button: 6 / 7;
 
   @supports (not (grid-template-columns: subgrid)) {
     display: flex;
@@ -66,6 +71,7 @@ export default {
     grid-template-columns: var(--_grid-template-columns);
     gap: var(--_gap);
   }
+
   &-head {
     display: grid;
     grid-template-columns: var(--_grid-template-columns);
@@ -76,6 +82,7 @@ export default {
     border-bottom: 1px solid $primary-color;
     color: $primary-color;
   }
+
   &-title {
     grid-column: var(--_column-title);
     font-size: $h2-font-size;
@@ -87,6 +94,10 @@ export default {
 
   &-dockingstation {
     grid-column: var(--_column-dockingstation);
+  }
+
+  &-room-id {
+    grid-column: var(--_column-room-id);
   }
 
   &-special-information {
@@ -125,6 +136,10 @@ export default {
 
     &-special-information {
       grid-column: var(--_column-special-information);
+    }
+
+    &-room-id {
+      grid-column: var(--_column-room-id);
     }
 
     button {
