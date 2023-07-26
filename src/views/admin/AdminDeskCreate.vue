@@ -13,8 +13,8 @@
               <input id="name" type="text" v-model="formData.name" />
             </div>
             <div class="desk-create-floor">
-              <label for="floor">Bildschirme</label>
-              <select name="floor" id="floor" v-model="formData.displays">
+              <label for="displays">Bildschirme</label>
+              <select name="displays" id="displays" v-model="formData.displays">
                 <option value="">-</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -22,8 +22,8 @@
               </select>
             </div>
             <div class="desk-create-noiselevel">
-              <label for="noiselevel">Dockingstation</label>
-              <select name="noiselevel" id="noiselevel" v-model="formData.dockingstation">
+              <label for="dockingstation">Dockingstation</label>
+              <select name="dockingstation" id="dockingstation" v-model="formData.dockingstation">
                 <option value="">-</option>
                 <option value="silent">HP G2</option>
                 <option value="normal">HP G3</option>
@@ -31,8 +31,15 @@
               </select>
             </div>
             <div class="desk-create-special-information">
-              <label for="name">Weitere Infos</label>
-              <textarea id="name" type="text" v-model="formData.specialInformation" />
+              <label for="specialInformation">Weitere Infos</label>
+              <textarea id="specialInformation" type="text" v-model="formData.specialInformation" />
+            </div>
+            <div class="desk-create-room-id">
+              <label for="roomId">Raum</label>
+              <select name="roomId" id="roomId" v-model="formData.roomId">
+                <option value="">-</option>
+                <option :value="room.id" v-for="room in roomsData">{{ room.name }}</option>
+              </select>
             </div>
             <button class="button">Arbeitsplatz hinzufügen</button>
           </fieldset>
@@ -50,8 +57,10 @@ export default {
         name: '',
         displays: '',
         dockingstation: '',
-        specialInformation: ''
-      }
+        specialInformation: '',
+        roomId: ''
+      },
+      roomsData: []
     }
   },
   methods: {
@@ -69,9 +78,20 @@ export default {
           this.formData.displays = ''
           this.formData.dockingstation = ''
           this.formData.specialInformation = ''
+          this.formData.roomId = ''
         })
         .catch((error) => console.error(error))
+    },
+
+    async getRooms() {
+      const response = await fetch('http://localhost:3000/rooms')
+      const rooms = await response.json()
+      this.roomsData = rooms
     }
+  },
+
+  beforeMount() {
+    this.getRooms()
   }
 }
 </script>
