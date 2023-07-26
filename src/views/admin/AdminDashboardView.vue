@@ -11,6 +11,7 @@
         </div>
         <div class="column">
           <h2>Desks</h2>
+          <desks-list />
         </div>
       </div>
     </div>
@@ -19,6 +20,7 @@
 
 <script>
 import RoomsList from '@/views/components/RoomsList.vue'
+import DesksList from '@/views/components/DesksList.vue'
 
 export default {
   data() {
@@ -28,7 +30,8 @@ export default {
     }
   },
   components: {
-    'rooms-list': RoomsList
+    'rooms-list': RoomsList,
+    'desks-list': DesksList
   },
   methods: {
     async getRooms() {
