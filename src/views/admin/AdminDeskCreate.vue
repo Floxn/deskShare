@@ -30,6 +30,10 @@
                 <option value="loud">HP G5</option>
               </select>
             </div>
+            <div class="desk-create-special-information">
+              <label for="name">Weitere Infos</label>
+              <textarea id="name" type="text" v-model="formData.specialInformation" />
+            </div>
             <button class="button">Arbeitsplatz hinzufügen</button>
           </fieldset>
         </form>
@@ -45,7 +49,8 @@ export default {
       formData: {
         name: '',
         displays: '',
-        dockingstation: ''
+        dockingstation: '',
+        specialInformation: ''
       }
     }
   },
@@ -63,6 +68,7 @@ export default {
           this.formData.name = ''
           this.formData.displays = ''
           this.formData.dockingstation = ''
+          this.formData.specialInformation = ''
         })
         .catch((error) => console.error(error))
     }
