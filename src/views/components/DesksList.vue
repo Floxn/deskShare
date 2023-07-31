@@ -7,23 +7,35 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
-    <div class="desk" v-for="desk in desksData">
-      <h2 class="desk-title">
-        {{ desk.name }}
-      </h2>
-      <div class="desk-displays">
-        {{ desk.displays }}
-      </div>
-      <div class="desk-dockingstation">
-        {{ desk.dockingstation }}
-      </div>
-      <div class="desk-special-information">
-        {{ desk.specialInformation }}
-      </div>
-      <div class="desk-room-id">
-        {{ desk.roomId }}
-      </div>
-      <button class="button edit">edit</button>
+    <div class="desk" v-for="(desk, index) in desksData" :key="index">
+      <template v-if="!desk.editMode">
+        <h2 class="desk-title">
+          {{ desk.name }}
+        </h2>
+        <div class="desk-displays">
+          {{ desk.displays }}
+        </div>
+        <div class="desk-dockingstation">
+          {{ desk.dockingstation }}
+        </div>
+        <div class="desk-special-information">
+          {{ desk.specialInformation }}
+        </div>
+        <div class="desk-room-id">
+          {{ desk.roomId }}
+        </div>
+        <button class="button edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
+          edit
+        </button>
+      </template>
+      <template v-else>
+        <input v-model="desk.name" class="desk-title" />
+        <input v-model="desk.displays" class="desk-displays" />
+        <input v-model="desk.dockingstation" class="desk-dockingstation" />
+        <input v-model="desk.specialInformation" class="desk-special-information" />
+        <input v-model="desk.roomId" class="desk-room-id" />
+        <button class="button save" @click="saveDeskInputs(desk)">save</button>
+      </template>
     </div>
   </div>
 </template>
@@ -41,6 +53,13 @@ export default {
       const response = await fetch('http://localhost:3000/desks')
       const desks = await response.json()
       this.desksData = desks
+    },
+    enableEditMode(desk) {
+      desk.editMode = true
+    },
+    saveDeskInputs(desk) {
+      /* TODO hier muss per api POST method die geänderten Daten and den JSON-Server geschickt werden */
+      desk.editMode = false
     }
   },
   beforeMount() {
@@ -107,11 +126,18 @@ export default {
 
 .desk {
   display: grid;
+  gap: calc($spacer / 2);
   align-items: center;
   transition: $transition;
   padding-block: calc($spacer / 2);
 
-  &-title {
+  > input {
+    margin-bottom: 0;
+    background-color: lighten($background-color-lighter, 35%);
+    color: $background-color;
+  }
+
+  &-title:not(input) {
     font-size: $h3-font-size;
   }
 
