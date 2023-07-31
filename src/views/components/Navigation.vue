@@ -6,6 +6,7 @@
       <li><a href="/admin/rooms">Admin Rooms</a></li>
       <li><a href="/admin/desk/create">Admin Desk Create</a></li>
       <li><a href="/admin/desks">Admin Desks</a></li>
+      <li><a href="/admin/inventory">Admin Inventory</a></li>
       <li><a href="/room?id=2">Room 2</a></li>
     </ul>
   </nav>
