@@ -7,8 +7,8 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
-    <div class="desk" v-for="(desk, index) in desksData" :key="index">
-      <template v-if="!desk.editMode">
+    <template v-for="(desk, index) in desksData" :key="index">
+      <div class="desk" v-if="!desk.editMode">
         <h2 class="desk-title">
           {{ desk.name }}
         </h2>
@@ -27,16 +27,16 @@
         <button class="button edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
           edit
         </button>
-      </template>
-      <template v-else>
+      </div>
+      <form v-else @submit.prevent="saveDeskInputs(desk)" class="desk">
         <input v-model="desk.name" class="desk-title" />
         <input v-model="desk.displays" class="desk-displays" />
         <input v-model="desk.dockingstation" class="desk-dockingstation" />
         <input v-model="desk.specialInformation" class="desk-special-information" />
         <input v-model="desk.roomId" class="desk-room-id" />
-        <button class="button save" @click="saveDeskInputs(desk)">save</button>
-      </template>
-    </div>
+        <button class="button save">save</button>
+      </form>
+    </template>
   </div>
 </template>
 
@@ -45,7 +45,14 @@ export default {
   name: 'desks-list',
   data() {
     return {
-      desksData: []
+      desksData: [],
+      formData: {
+        name: '',
+        displays: '',
+        dockingstation: '',
+        specialInformation: '',
+        roomId: ''
+      }
     }
   },
   methods: {
@@ -54,11 +61,25 @@ export default {
       const desks = await response.json()
       this.desksData = desks
     },
+
+    /* TODO-Mentoring bisher wird hier ein neuer Datensatz geschrieben. Wie kann ich ein vorhandenen Datensatz ändern */
+    handleForm() {
+      fetch('http://localhost:3000/desks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.formData)
+      })
+        //.then((response) => response.json())
+        .catch((error) => console.error(error))
+    },
     enableEditMode(desk) {
       desk.editMode = true
     },
     saveDeskInputs(desk) {
       /* TODO hier muss per api POST method die geänderten Daten and den JSON-Server geschickt werden */
+      this.handleForm()
       desk.editMode = false
     }
   },
