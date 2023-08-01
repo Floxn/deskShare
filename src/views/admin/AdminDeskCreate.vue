@@ -11,11 +11,11 @@
           <fieldset>
             <div class="desk-create-name">
               <label for="name">Name</label>
-              <input id="name" type="text" v-model="formData.name" />
+              <input id="name" type="text" v-model="desk.name" />
             </div>
             <div class="desk-create-floor">
               <label for="displays">Bildschirme</label>
-              <select name="displays" id="displays" v-model="formData.displays">
+              <select name="displays" id="displays" v-model="desk.displays">
                 <option value="">-</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -24,7 +24,7 @@
             </div>
             <div class="desk-create-noiselevel">
               <label for="dockingstation">Dockingstation</label>
-              <select name="dockingstation" id="dockingstation" v-model="formData.dockingstation">
+              <select name="dockingstation" id="dockingstation" v-model="desk.dockingstation">
                 <option value="">-</option>
                 <option value="silent">HP G2</option>
                 <option value="normal">HP G3</option>
@@ -33,11 +33,11 @@
             </div>
             <div class="desk-create-special-information">
               <label for="specialInformation">Weitere Infos</label>
-              <textarea id="specialInformation" type="text" v-model="formData.specialInformation" />
+              <textarea id="specialInformation" type="text" v-model="desk.specialInformation" />
             </div>
             <div class="desk-create-room-id">
               <label for="roomId">Raum</label>
-              <select name="roomId" id="roomId" v-model="formData.roomId">
+              <select name="roomId" id="roomId" v-model="desk.roomId">
                 <option value="">-</option>
                 <option :value="room.id" :key="room.id" v-for="room in roomsData">
                   {{ room.name }}
@@ -58,7 +58,7 @@ import Navigation from '@/views/components/Navigation.vue'
 export default {
   data() {
     return {
-      formData: {
+      desk: {
         name: '',
         displays: '',
         dockingstation: '',
@@ -79,14 +79,14 @@ export default {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(this.formData)
+          body: JSON.stringify(this.desk)
         })
         const data = await response.json()
-        this.formData.name = ''
-        this.formData.displays = ''
-        this.formData.dockingstation = ''
-        this.formData.specialInformation = ''
-        this.formData.roomId = ''
+        this.desk.name = ''
+        this.desk.displays = ''
+        this.desk.dockingstation = ''
+        this.desk.specialInformation = ''
+        this.desk.roomId = ''
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
