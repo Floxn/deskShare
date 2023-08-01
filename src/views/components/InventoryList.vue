@@ -12,9 +12,13 @@ export default {
 
   methods: {
     async getInventory() {
-      const response = await fetch('http://localhost:3000/inventory')
-      const inventory = await response.json()
-      this.inventoryData = inventory
+      try {
+        const response = await fetch('http://localhost:3000/inventory')
+        const inventory = await response.json()
+        this.inventoryData = inventory
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     }
   },
 
