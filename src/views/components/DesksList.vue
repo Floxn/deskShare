@@ -7,8 +7,8 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
-    <template v-for="(desk, index) in desksData" :key="index">
-      <div class="desk" v-if="!desk.editMode">
+    <template v-for="desk in desksData" :key="desk.id">
+      <div class="desk" v-if="!desk.editMode" @dblclick="enableEditMode(desk)">
         <h2 class="desk-title">
           {{ desk.name }}
         </h2>
@@ -28,7 +28,7 @@
           edit
         </button>
       </div>
-      <form v-else @submit.prevent="saveDeskInputs(desk)" class="desk">
+      <form v-else @submit.prevent="editDesk(desk)" class="desk">
         <input v-model="desk.name" class="desk-title" />
         <input v-model="desk.displays" class="desk-displays" />
         <input v-model="desk.dockingstation" class="desk-dockingstation" />
@@ -45,42 +45,38 @@ export default {
   name: 'desks-list',
   data() {
     return {
-      desksData: [],
-      formData: {
-        name: '',
-        displays: '',
-        dockingstation: '',
-        specialInformation: '',
-        roomId: ''
-      }
+      desksData: []
     }
   },
   methods: {
     async getdesks() {
-      const response = await fetch('http://localhost:3000/desks')
-      const desks = await response.json()
-      this.desksData = desks
+      try {
+        const response = await fetch('http://localhost:3000/desks')
+        const desks = await response.json()
+        this.desksData = desks
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     },
 
-    /* TODO-Mentoring bisher wird hier ein neuer Datensatz geschrieben. Wie kann ich ein vorhandenen Datensatz ändern */
-    handleForm() {
-      fetch('http://localhost:3000/desks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.formData)
-      })
-        //.then((response) => response.json())
-        .catch((error) => console.error(error))
+    async editDesk(desk) {
+      try {
+        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(desk)
+        })
+        const data = await response.json()
+        desk.editMode = false
+      } catch (error) {
+        console.log('Fehler beim Speichern der Daten', error)
+      }
     },
+
     enableEditMode(desk) {
       desk.editMode = true
-    },
-    saveDeskInputs(desk) {
-      /* TODO hier muss per api POST method die geänderten Daten and den JSON-Server geschickt werden */
-      this.handleForm()
-      desk.editMode = false
     }
   },
   beforeMount() {
