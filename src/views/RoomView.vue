@@ -5,7 +5,7 @@ https://stackoverflow.com/questions/60715099/how-can-i-implement-v-for-with-v-if
 <template>
   <navigation />
   <template v-for="room in roomsData">
-    <div class="room" v-if="room.id === roomQueryId">
+    <div class="room" v-if="room.id === roomQueryId" :key="room.id">
       <h1 class="room-title">
         {{ room.name }}
       </h1>
@@ -35,9 +35,13 @@ export default {
   },
   methods: {
     async getRooms() {
-      const response = await fetch('http://localhost:3000/rooms')
-      const rooms = await response.json()
-      this.roomsData = rooms
+      try {
+        const response = await fetch('http://localhost:3000/rooms')
+        const rooms = await response.json()
+        this.roomsData = rooms
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     }
   },
   mounted() {
