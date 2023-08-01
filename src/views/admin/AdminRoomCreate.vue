@@ -7,7 +7,7 @@
         TODO Mentoring: Schreibt man für die H1 besser einen Compnente die man dann an der Stelle einfügt? Bzw. sollte der Grundaufbau vom Layout her immer gleich sein. Der findet dann außerhalb dieser Componente statt, wie wird der Seitentiel dann übergeben? Also wenn Z.B. in der <APP> der Grundaufbau wäre
 -->
         <h1 class="page-title">Create Room</h1>
-        <form @submit.prevent="handleForm" class="room-create-form">
+        <form @submit.prevent="addRoom" class="room-create-form">
           <fieldset>
             <div class="room-create-name">
               <label for="name">Name</label>
@@ -56,6 +56,24 @@ export default {
     navigation: Navigation
   },
   methods: {
+    async addRoom() {
+      try {
+        const response = await fetch('http://localhost:3000/rooms', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.formData)
+        })
+        const data = await response.json()
+        this.formData.name = ''
+        this.formData.floor = ''
+        this.formData.noiseLevel = ''
+      } catch (error) {
+        console.log('Fehler beim Speichern der Daten', error)
+      }
+    },
+
     handleForm() {
       fetch('http://localhost:3000/rooms', {
         method: 'POST',
