@@ -11,11 +11,11 @@
           <fieldset>
             <div class="room-create-name">
               <label for="name">Name</label>
-              <input id="name" type="text" v-model="formData.name" />
+              <input id="name" type="text" v-model="room.name" />
             </div>
             <div class="room-create-floor">
               <label for="floor">Stockwerk</label>
-              <select name="floor" id="floor" v-model="formData.floor">
+              <select name="floor" id="floor" v-model="room.floor">
                 <option value="">-</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -24,7 +24,7 @@
             </div>
             <div class="room-create-noiselevel">
               <label for="noiselevel">Lautstärke</label>
-              <select name="noiselevel" id="noiselevel" v-model="formData.noiseLevel">
+              <select name="noiselevel" id="noiselevel" v-model="room.noiseLevel">
                 <option value="">-</option>
                 <option value="silent">leise</option>
                 <option value="normal">normal</option>
@@ -45,7 +45,7 @@ import Navigation from '@/views/components/Navigation.vue'
 export default {
   data() {
     return {
-      formData: {
+      room: {
         name: '',
         floor: '',
         noiseLevel: ''
@@ -58,53 +58,21 @@ export default {
   methods: {
     async addRoom() {
       try {
-        const response = await fetch('http://localhost:3000/rooms', {
+        const response = await fetch('http://localhost:3000/room', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(this.formData)
+          body: JSON.stringify(this.room)
         })
         const data = await response.json()
-        this.formData.name = ''
-        this.formData.floor = ''
-        this.formData.noiseLevel = ''
+        this.room.name = ''
+        this.room.floor = ''
+        this.room.noiseLevel = ''
       } catch (error) {
         console.log('Fehler beim Speichern der Daten', error)
       }
-    },
-
-    handleForm() {
-      fetch('http://localhost:3000/rooms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.formData)
-      })
-        .then((response) => response.json())
-        .then(() => {
-          this.formData.name = ''
-          this.formData.floor = ''
-          this.formData.noiseLevel = ''
-        })
-        .catch((error) => console.error(error))
     }
-
-    /*    TODO Mentoring: funktioniert und schreibt einen neun DB Eintrag. Nur wie bekomm ich die Felder wieder zurückgesetzt?
-      async handleForm() {
-      const response = await fetch('http://localhost:3000/rooms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.formData)
-      })
-      const { formData: name, floor, noiseLevel } = await response.json()
-      this.name = name
-      this.floor = floor
-      this.noiseLevel = noiseLevel
-    }*/
   }
 }
 </script>
