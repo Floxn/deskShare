@@ -5,7 +5,7 @@
       <div class="rooms-floor">Stockwerk</div>
       <div class="rooms-noiselevel">Lautstärke</div>
     </div>
-    <div class="room" v-for="room in roomsData">
+    <div class="room" v-for="room in roomsData" :key="room.id">
       <h2 class="room-title">
         {{ room.name }}
       </h2>
@@ -30,9 +30,13 @@ export default {
   },
   methods: {
     async getRooms() {
-      const response = await fetch('http://localhost:3000/rooms')
-      const rooms = await response.json()
-      this.roomsData = rooms
+      try {
+        const response = await fetch('http://localhost:3000/rooms')
+        const rooms = await response.json()
+        this.roomsData = rooms
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     }
   },
   beforeMount() {
