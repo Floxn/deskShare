@@ -26,31 +26,12 @@ import Navigation from '@/views/components/Navigation.vue'
 
 export default {
   data() {
-    return {
-      roomsData: [],
-      desksData: []
-    }
+    return {}
   },
   components: {
     'rooms-list': RoomsList,
     'desks-list': DesksList,
     navigation: Navigation
-  },
-  methods: {
-    async getRooms() {
-      const response = await fetch('http://localhost:3000/rooms')
-      const rooms = await response.json()
-      this.roomsData = rooms
-    },
-    async getDesks() {
-      const response = await fetch('http://localhost:3000/desks')
-      const desks = await response.json()
-      this.roomsData = desks
-    }
-  },
-  beforeMount() {
-    this.getRooms()
-    this.getDesks()
   }
 }
 </script>
