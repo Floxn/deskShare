@@ -4,10 +4,10 @@
     <div class="row desk-create">
       <div class="column">
         <!--
-        TODO Mentoring: Schreibt man für die H1 besser einen Compnente die man dann an der Stelle einfügt? Bzw. sollte der Grundaufbau vom Layout her immer gleich sein. Der findet dann außerhalb dieser Componente statt, wie wird der Seitentiel dann übergeben? Also wenn Z.B. in der <APP> der Grundaufbau wäre
+        TODO Mentoring: Schreibt man für die H1 besser einen Component die man dann an der Stelle einfügt? Bzw. sollte der Grundaufbau vom Layout her immer gleich sein. Der findet dann außerhalb dieser Componente statt, wie wird der Seitentiel dann übergeben? Also wenn Z.B. in der <APP> der Grundaufbau wäre
 -->
         <h1 class="page-title">Create desk</h1>
-        <form @submit.prevent="handleForm" class="desk-create-form">
+        <form @submit.prevent="addDesk" class="desk-create-form">
           <fieldset>
             <div class="desk-create-name">
               <label for="name">Name</label>
@@ -39,7 +39,9 @@
               <label for="roomId">Raum</label>
               <select name="roomId" id="roomId" v-model="formData.roomId">
                 <option value="">-</option>
-                <option :value="room.id" v-for="room in roomsData">{{ room.name }}</option>
+                <option :value="room.id" :key="room.id" v-for="room in roomsData">
+                  {{ room.name }}
+                </option>
               </select>
             </div>
             <button class="button">Arbeitsplatz hinzufügen</button>
@@ -70,23 +72,24 @@ export default {
     navigation: Navigation
   },
   methods: {
-    handleForm() {
-      fetch('http://localhost:3000/desks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.formData)
-      })
-        .then((response) => response.json())
-        .then(() => {
-          this.formData.name = ''
-          this.formData.displays = ''
-          this.formData.dockingstation = ''
-          this.formData.specialInformation = ''
-          this.formData.roomId = ''
+    async addDesk() {
+      try {
+        const response = await fetch('http://localhost:3000/desks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.formData)
         })
-        .catch((error) => console.error(error))
+        const data = await response.json()
+        this.formData.name = ''
+        this.formData.displays = ''
+        this.formData.dockingstation = ''
+        this.formData.specialInformation = ''
+        this.formData.roomId = ''
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     },
 
     async getRooms() {
