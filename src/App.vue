@@ -1,11 +1,21 @@
 <template>
+  <navigation />
   <main>
     <router-view></router-view>
   </main>
 </template>
 
 <script>
-export default {}
+import Navigation from '@/views/components/Navigation.vue'
+
+export default {
+  data() {
+    return {}
+  },
+  components: {
+    navigation: Navigation
+  }
+}
 </script>
 
 <style lang="scss">
