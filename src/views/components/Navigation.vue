@@ -22,6 +22,9 @@
       <li class="navigation-item">
         <a class="navigation-link" href="/room?id=2">Room 2</a>
       </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/register">Register User</a>
+      </li>
     </ul>
   </nav>
 </template>
