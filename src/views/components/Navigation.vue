@@ -1,13 +1,27 @@
 <template>
-  <nav>
-    <ul>
-      <li><a href="/admin">Admin</a></li>
-      <li><a href="/admin/room/create">Admin Room Create</a></li>
-      <li><a href="/admin/rooms">Admin Rooms</a></li>
-      <li><a href="/admin/desk/create">Admin Desk Create</a></li>
-      <li><a href="/admin/desks">Admin Desks</a></li>
-      <li><a href="/admin/inventory">Admin Inventory</a></li>
-      <li><a href="/room?id=2">Room 2</a></li>
+  <nav class="navigation">
+    <ul class="navigation-list">
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin">Admin</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin/room/create">Admin Room Create</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin/rooms">Admin Rooms</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin/desk/create">Admin Desk Create</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin/desks">Admin Desks</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/admin/inventory">Admin Inventory</a>
+      </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/room?id=2">Room 2</a>
+      </li>
     </ul>
   </nav>
 </template>
@@ -16,4 +30,15 @@
 export default {}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/assets/scss/variables';
+.navigation {
+  &-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: $spacer * 1.5;
+  }
+}
+</style>
