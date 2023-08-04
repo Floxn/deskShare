@@ -1,48 +1,39 @@
-<!--
-die Lösung sieht smarter aus. Den gewollten Raum mit .filter herausnehmen
-https://stackoverflow.com/questions/60715099/how-can-i-implement-v-for-with-v-if?rq=3
--->
 <template>
-  <template v-for="room in roomsData">
-    <div class="room" v-if="room.id === roomQueryId" :key="room.id">
-      <h1 class="room-title">
-        {{ room.name }}
-      </h1>
-      <div class="room-floor">
-        {{ room.floor }}
-      </div>
-      <div class="room-noiselevel">
-        {{ room.noiseLevel }}
-      </div>
-      <button class="button edit">edit</button>
+  <div class="room">
+    <h1 class="room-title">
+      {{ roomsData.name }}
+    </h1>
+    <div class="room-floor">
+      {{ roomsData.floor }}
     </div>
-  </template>
+    <div class="room-noiselevel">
+      {{ roomsData.noiseLevel }}
+    </div>
+    <button class="button edit">edit</button>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      roomsData: [],
-      roomQueryId: undefined
+      roomsData: {}
     }
   },
   methods: {
-    async getRooms() {
+    async getRooms(roomId) {
       try {
-        const response = await fetch('http://localhost:3000/rooms')
-        const rooms = await response.json()
-        this.roomsData = rooms
+        const response = await fetch(`http://localhost:3000/rooms/${roomId}`)
+        const room = await response.json()
+        this.roomsData = room
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
     }
   },
-  mounted() {
-    this.roomQueryId = Number(this.$route.query.id)
-  },
   beforeMount() {
-    this.getRooms()
+    const roomId = Number(this.$route.query.id)
+    this.getRooms(roomId)
   }
 }
 </script>
