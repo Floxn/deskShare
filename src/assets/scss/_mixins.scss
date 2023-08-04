@@ -1,0 +1,23 @@
+@mixin list-view {
+    display: grid;
+    gap: calc($spacer / 2);
+    align-items: center;
+    transition: $transition;
+    padding-block: calc($spacer / 2);
+
+    >input {
+        margin-bottom: 0;
+        background-color: lighten($background-color-lighter, 35%);
+        color: $background-color;
+    }
+
+    &-title:not(input) {
+        font-size: $h3-font-size;
+    }
+
+    &:hover,
+    &:focus-visible {
+        cursor: pointer;
+        @include linear-gradient;
+    }
+}

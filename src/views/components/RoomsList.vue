@@ -5,18 +5,26 @@
       <div class="rooms-floor">Stockwerk</div>
       <div class="rooms-noiselevel">Lautstärke</div>
     </div>
-    <div class="room" v-for="room in roomsData" :key="room.id">
-      <h2 class="room-title">
-        {{ room.name }}
-      </h2>
-      <div class="room-floor">
-        {{ room.floor }}
+    <template v-for="room in roomsData" :key="room.id">
+      <div v-if="!room.editMode" @dblclick.prevent="enableEditMode(room)" class="room">
+        <h2 class="room-title">
+          {{ room.name }}
+        </h2>
+        <div class="room-floor">
+          {{ room.floor }}
+        </div>
+        <div class="room-noiselevel">
+          {{ room.noiseLevel }}
+        </div>
+        <button @click.prevent="enableEditMode(room)" class="button edit">edit</button>
       </div>
-      <div class="room-noiselevel">
-        {{ room.noiseLevel }}
-      </div>
-      <button class="button edit">edit</button>
-    </div>
+      <form v-else @submit.prevent="editRoom(room)" class="room">
+        <input type="text" v-model="room.name" class="room-title">
+        <input type="text" v-model="room.floor" class="room-floor">
+        <input type="text" v-model="room.noiseLevel" class="room-noiselevel">
+        <button class="button save">save</button>
+      </form>
+    </template>
   </div>
 </template>
 
@@ -37,6 +45,26 @@ export default {
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
+    },
+
+    async editRoom(room) {
+      try {
+        const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(room)
+        })
+        const data = await response.json()
+        room.editMode = false
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
+    },
+
+    enableEditMode(room) {
+      room.editMode = true
     }
   },
   beforeMount() {
@@ -47,6 +75,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/variables';
+@import '@/assets/scss/mixins';
 
 .rooms {
   --_grid-template-columns: 2fr 1fr 1fr 100px;
@@ -60,11 +89,13 @@ export default {
     display: flex;
     flex-direction: column;
   }
+
   @supports (grid-template-columns: subgrid) {
     display: grid;
     grid-template-columns: var(--_grid-template-columns);
     gap: var(--_gap);
   }
+
   &-head {
     display: grid;
     grid-template-columns: var(--_grid-template-columns);
@@ -75,6 +106,7 @@ export default {
     border-bottom: 1px solid $primary-color;
     color: $primary-color;
   }
+
   &-title {
     grid-column: var(--_column-title);
     font-size: $h2-font-size;
@@ -90,22 +122,17 @@ export default {
 }
 
 .room {
-  display: grid;
-  align-items: center;
-  transition: $transition;
-  padding-block: calc($spacer / 2);
-
-  &-title {
-    font-size: $h3-font-size;
-  }
+  @include list-view;
 
   @supports (not (grid-template-columns: subgrid)) {
     grid-template-columns: var(--_grid-template-columns);
     margin-bottom: 1rem;
   }
+
   @supports (grid-template-columns: subgrid) {
     grid-column: 1 / 5;
     grid-template-columns: subgrid;
+
     &-title {
       grid-column: var(--_column-title);
     }
@@ -121,12 +148,6 @@ export default {
     button {
       grid-column: var(--_column-button);
     }
-  }
-
-  &:hover,
-  &:focus-visible {
-    cursor: pointer;
-    @include linear-gradient;
   }
 }
 </style>

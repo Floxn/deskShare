@@ -29,11 +29,11 @@
         </button>
       </div>
       <form v-else @submit.prevent="editDesk(desk)" class="desk">
-        <input v-model="desk.name" class="desk-title" />
-        <input v-model="desk.displays" class="desk-displays" />
-        <input v-model="desk.dockingstation" class="desk-dockingstation" />
-        <input v-model="desk.specialInformation" class="desk-special-information" />
-        <input v-model="desk.roomId" class="desk-room-id" />
+        <input type="text" v-model="desk.name" class="desk-title" />
+        <input type="text" v-model="desk.displays" class="desk-displays" />
+        <input type="text" v-model="desk.dockingstation" class="desk-dockingstation" />
+        <input type="text" v-model="desk.specialInformation" class="desk-special-information" />
+        <input type="number" v-model="desk.roomId" class="desk-room-id" />
         <button class="button save">save</button>
       </form>
     </template>
@@ -87,6 +87,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/variables';
+@import '@/assets/scss/mixins';
 
 .desks {
   --_grid-template-columns: 2fr 1fr 1fr 1fr 1fr 100px;
@@ -102,6 +103,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
+
   @supports (grid-template-columns: subgrid) {
     display: grid;
     grid-template-columns: var(--_grid-template-columns);
@@ -142,29 +144,18 @@ export default {
 }
 
 .desk {
-  display: grid;
-  gap: calc($spacer / 2);
-  align-items: center;
-  transition: $transition;
-  padding-block: calc($spacer / 2);
 
-  > input {
-    margin-bottom: 0;
-    background-color: lighten($background-color-lighter, 35%);
-    color: $background-color;
-  }
-
-  &-title:not(input) {
-    font-size: $h3-font-size;
-  }
+  @include list-view;
 
   @supports (not (grid-template-columns: subgrid)) {
     grid-template-columns: var(--_grid-template-columns);
     margin-bottom: 1rem;
   }
+
   @supports (grid-template-columns: subgrid) {
     grid-column: 1 / 5;
     grid-template-columns: subgrid;
+
     &-title {
       grid-column: var(--_column-title);
     }
@@ -188,12 +179,6 @@ export default {
     button {
       grid-column: var(--_column-button);
     }
-  }
-
-  &:hover,
-  &:focus-visible {
-    cursor: pointer;
-    @include linear-gradient;
   }
 }
 </style>
