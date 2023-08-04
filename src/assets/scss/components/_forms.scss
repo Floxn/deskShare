@@ -5,7 +5,7 @@ fieldset {
 
 select,
 input,
-textarea,{
+textarea{
   width: 100%;
   box-sizing: border-box;
   padding: .5em 1em;
@@ -16,6 +16,13 @@ textarea,{
 }
 
 input {
+  &[type="checkbox"] {
+    width: auto;
+    margin-right: $spacer;
+    &, + label {
+      cursor: pointer;
+    }
+  }
 }
 
 label {

@@ -22,8 +22,8 @@
               <input type="password" id="password" v-model="user.password" />
             </div>
             <div class="user-create-isAdmin">
-              <label for="isAdmin">Ist Admin</label>
               <input type="checkbox" id="isAdmin" v-model="user.isAdmin" />
+              <label for="isAdmin">Ist Admin</label>
             </div>
             <button class="button">User registrieren</button>
           </fieldset>
