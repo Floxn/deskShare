@@ -35,7 +35,7 @@ export default {
     }
   },
   beforeMount() {
-    const userId = Number(this.$route.query.id)
+    const userId = Number(this.$route.params.userId)
     this.getUser(userId)
   }
 }

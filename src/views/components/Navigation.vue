@@ -20,10 +20,10 @@
         <a class="navigation-link" href="/admin/inventory">Admin Inventory</a>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/room?id=2">Room 2</a>
+        <a class="navigation-link" href="/room/2">Room 2</a>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/user?id=2">User 1</a>
+        <a class="navigation-link" href="/user/2">User 1</a>
       </li>
       <li class="navigation-item">
         <a class="navigation-link" href="/register">Register User</a>

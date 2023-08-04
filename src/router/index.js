@@ -15,7 +15,7 @@ const router = createRouter({
       component: () => import('@/views/typo.vue')
     },
     {
-      path: '/room',
+      path: '/room/:roomId',
       name: 'room',
       component: () => import('@/views/RoomView.vue')
     },
@@ -25,7 +25,7 @@ const router = createRouter({
       component: () => import('@/views/RegisterUser.vue')
     },
     {
-      path: '/user',
+      path: '/user/:userId',
       name: 'user',
       component: () => import('@/views/UserView.vue')
     },

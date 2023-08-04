@@ -32,7 +32,7 @@ export default {
     }
   },
   beforeMount() {
-    const roomId = Number(this.$route.query.id)
+    const roomId = Number(this.$route.params.roomId)
     this.getRoom(roomId)
   }
 }
