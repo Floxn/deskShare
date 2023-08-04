@@ -1,13 +1,13 @@
 <template>
   <div class="room">
     <h1 class="room-title">
-      {{ roomsData.name }}
+      {{ roomData.name }}
     </h1>
     <div class="room-floor">
-      {{ roomsData.floor }}
+      {{ roomData.floor }}
     </div>
     <div class="room-noiselevel">
-      {{ roomsData.noiseLevel }}
+      {{ roomData.noiseLevel }}
     </div>
     <button class="button edit">edit</button>
   </div>
@@ -17,15 +17,15 @@
 export default {
   data() {
     return {
-      roomsData: {}
+      roomData: {}
     }
   },
   methods: {
-    async getRooms(roomId) {
+    async getRoom(roomId) {
       try {
         const response = await fetch(`http://localhost:3000/rooms/${roomId}`)
         const room = await response.json()
-        this.roomsData = room
+        this.roomData = room
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
@@ -33,7 +33,7 @@ export default {
   },
   beforeMount() {
     const roomId = Number(this.$route.query.id)
-    this.getRooms(roomId)
+    this.getRoom(roomId)
   }
 }
 </script>
