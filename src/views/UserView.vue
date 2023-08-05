@@ -6,13 +6,17 @@
     <div class="user-eMail">
       {{ userData.eMail }}
     </div>
-    <input type="password" class="user-password" v-bind="userData.eMail" />
-    <input
-      type="checkbox"
-      class="user-isAdmin"
-      :checked="userData.isAdmin"
-      v-bind="userData.eMail"
-    />
+    <input type="password" class="user-password" v-model="userData.eMail" />
+    <div class="user-isAdmin">
+      <input
+        type="checkbox"
+        class="user-isAdmin-input"
+        id="isAdmin"
+        :checked="userData.isAdmin"
+        v-model="userData.isAdmin"
+      />
+      <label for="isAdmin">isAdmin</label>
+    </div>
   </div>
 </template>
 
@@ -27,7 +31,7 @@ export default {
     async getUser(userId) {
       try {
         const response = await fetch(`http://localhost:3000/users/${userId}`)
-        const user = response.json()
+        const user = await response.json()
         this.userData = user
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
