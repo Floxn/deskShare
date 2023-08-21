@@ -28,6 +28,9 @@
       <li class="navigation-item">
         <a class="navigation-link" href="/register">Register User</a>
       </li>
+      <li class="navigation-item">
+        <a class="navigation-link" href="/inventory">Inventoryr</a>
+      </li>
     </ul>
   </nav>
 </template>

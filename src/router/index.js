@@ -61,6 +61,11 @@ const router = createRouter({
       path: '/admin/desk/create',
       name: 'admin-desk-create',
       component: () => import('@/views/admin/AdminDeskCreate.vue')
+    },
+    {
+      path: '/inventory',
+      name: 'inventory',
+      component: () => import('@/views/components/InventoryList.vue')
     }
   ]
 })
