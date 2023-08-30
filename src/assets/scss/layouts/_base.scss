@@ -1,7 +1,15 @@
 main {
-  max-width:80vw;
-  margin-left: clamp(4rem,4rem,4rem); //(4rem, 10vw, 15rem)
-  margin-top: clamp(4rem,4rem,4rem); //(4rem, 10vw, 15rem)
+  width:60vw;
+  margin: clamp(4rem,4rem,4rem); //(4rem, 10vw, 15rem)
+}
+
+nav {
+  width: 20vw;
+}
+
+#app {
+  display: flex;
+  flex-direction: row;
 }
 
 .page-title {

@@ -28,9 +28,6 @@
       <li class="navigation-item">
         <router-link class="navigation-link" to="/register">Register User</router-link>
       </li>
-      <li class="navigation-item">
-        <router-link class="navigation-link" to="/inventory">Inventoryr</router-link>
-      </li>
     </ul>
   </nav>
 </template>
@@ -45,9 +42,13 @@ export default {}
   &-list {
     list-style-type: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
     gap: $spacer * 1.5;
+    position: fixed;
+    height: 100svh;
   }
 }
 
