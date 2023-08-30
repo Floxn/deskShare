@@ -6,7 +6,8 @@
     <div class="user-eMail">
       {{ userData.eMail }}
     </div>
-    <input type="password" class="user-password" v-model="userData.eMail" />
+    {{ userData.password }}
+    <input type="password" class="user-password" v-model="userData.password" />
     <div class="user-isAdmin">
       <input
         type="checkbox"
