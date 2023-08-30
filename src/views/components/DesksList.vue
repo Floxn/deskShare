@@ -7,6 +7,7 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
+    <!-- TODO Schreibt man das so mit dem <template> und dem v-if? Sieht für mich noch irgendwie komisch aus-->
     <template v-for="desk in desksData" :key="desk.id">
       <div class="desk" v-if="!desk.editMode" @dblclick="enableEditMode(desk)">
         <h2 class="desk-title">
@@ -144,7 +145,6 @@ export default {
 }
 
 .desk {
-
   @include list-view;
 
   @supports (not (grid-template-columns: subgrid)) {

@@ -15,3 +15,6 @@
 - Wie passiert das prüfen ob Admin oder nicht -> Statemanagement?
 - Wie klappen dann Seitenwechsel, wie behält die App diesen Benutzer als eingeloggt/isAdmin?
 
+# Aufteilung Components
+Am Beispiel Desks
+- Teilt man DeskList.vue auch noch auf und es sollte eine Desk.vue geben und diese Component sollte dann ind DeskList.vue eingebunden werden? 
