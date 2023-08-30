@@ -2,34 +2,34 @@
   <nav class="navigation">
     <ul class="navigation-list">
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin">Admin</a>
+        <router-link class="navigation-link" to="/admin">Admin</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin/room/create">Admin Room Create</a>
+        <router-link class="navigation-link" to="/admin/room/create">Admin Room Create</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin/rooms">Admin Rooms</a>
+        <router-link class="navigation-link" to="/admin/rooms">Admin Rooms</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin/desk/create">Admin Desk Create</a>
+        <router-link class="navigation-link" to="/admin/desk/create">Admin Desk Create</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin/desks">Admin Desks</a>
+        <router-link class="navigation-link" to="/admin/desks">Admin Desks</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/admin/inventory">Admin Inventory</a>
+        <router-link class="navigation-link" to="/admin/inventory">Admin Inventory</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/room/2">Room 2</a>
+        <router-link class="navigation-link" to="/room/2">Room 2</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/user/2">User 1</a>
+        <router-link class="navigation-link" to="/user/2">User 1</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/register">Register User</a>
+        <router-link class="navigation-link" to="/register">Register User</router-link>
       </li>
       <li class="navigation-item">
-        <a class="navigation-link" href="/inventory">Inventoryr</a>
+        <router-link class="navigation-link" to="/inventory">Inventoryr</router-link>
       </li>
     </ul>
   </nav>
@@ -48,6 +48,14 @@ export default {}
     flex-direction: row;
     flex-wrap: nowrap;
     gap: $spacer * 1.5;
+  }
+}
+
+.router {
+  &-link {
+    &-active {
+      border-bottom: 2px solid $primary-color;
+    }
   }
 }
 </style>
