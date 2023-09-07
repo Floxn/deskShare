@@ -28,6 +28,9 @@
         <button class="button edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
           edit
         </button>
+        <button class="button delete" v-if="!desk.editMode" @click="deleteDesk(desk)">
+          delete
+        </button>
       </div>
       <form v-else @submit.prevent="editDesk(desk)" class="desk">
         <input type="text" v-model="desk.name" class="desk-title" />
@@ -76,6 +79,21 @@ export default {
       }
     },
 
+    async deleteDesk(desk) {
+      try {
+        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        const data = await response.json()
+        console.log(data)
+      } catch (error) {
+        console.log('Fehler beim Löschen der Daten', error)
+      }
+    },
+
     enableEditMode(desk) {
       desk.editMode = true
     }
@@ -91,14 +109,15 @@ export default {
 @import '@/assets/scss/mixins';
 
 .desks {
-  --_grid-template-columns: 2fr 1fr 1fr 1fr 1fr 100px;
+  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 100px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-displays: 2 / 3;
   --_column-dockingstation: 3 / 4;
   --_column-special-information: 4 / 5;
   --_column-room-id: 5 / 6;
-  --_column-button: 6 / 7;
+  --_column-btn-edit-save: 6 / 7;
+  --_column-btn-delete: 7 / 8;
 
   @supports (not (grid-template-columns: subgrid)) {
     display: flex;
@@ -177,7 +196,13 @@ export default {
     }
 
     button {
-      grid-column: var(--_column-button);
+      .edit,
+      .save {
+        grid-column: var(--_column-btn-edit-save);
+      }
+      .delete {
+        grid-column: var(--_column-btn-delete);
+      }
     }
   }
 }

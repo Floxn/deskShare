@@ -8,10 +8,10 @@
         <router-link class="navigation-link" to="/admin/room/create">Admin Room Create</router-link>
       </li>
       <li class="navigation-item">
-        <router-link class="navigation-link" to="/admin/rooms">Admin Rooms</router-link>
+        <router-link class="navigation-link" to="/admin/desk/create">Admin Desk Create</router-link>
       </li>
       <li class="navigation-item">
-        <router-link class="navigation-link" to="/admin/desk/create">Admin Desk Create</router-link>
+        <router-link class="navigation-link" to="/admin/rooms">Admin Rooms</router-link>
       </li>
       <li class="navigation-item">
         <router-link class="navigation-link" to="/admin/desks">Admin Desks</router-link>
