@@ -49,6 +49,8 @@ export default {}
     gap: $spacer * 1.5;
     position: fixed;
     height: 100svh;
+    background: $background-color-lighter;
+    padding: $spacer;
   }
 }
 
