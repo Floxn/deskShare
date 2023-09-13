@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: '/admin/rooms',
       name: 'admin-rooms',
-      component: () => import('@/views/admin/AdminRooms.vue')
+      component: () => import('@/views/admin/room/AdminRooms.vue')
     },
     {
       path: '/admin/inventory',
@@ -50,17 +50,17 @@ const router = createRouter({
     {
       path: '/admin/room/create',
       name: 'admin-room-create',
-      component: () => import('@/views/admin/AdminRoomCreate.vue')
+      component: () => import('@/views/admin/room/AdminRoomCreate.vue')
     },
     {
       path: '/admin/desks',
       name: 'admin-desks',
-      component: () => import('@/views/admin/AdminDesks.vue')
+      component: () => import('@/views/admin/desk/AdminDesks.vue')
     },
     {
       path: '/admin/desk/create',
       name: 'admin-desk-create',
-      component: () => import('@/views/admin/AdminDeskCreate.vue')
+      component: () => import('@/views/admin/desk/AdminDeskCreate.vue')
     }
   ]
 })

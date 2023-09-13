@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import DesksList from '@/views/components/DesksList.vue'
+import DesksList from '@/views/components/desk/DesksList.vue'
 export default {
   data() {
     return {}

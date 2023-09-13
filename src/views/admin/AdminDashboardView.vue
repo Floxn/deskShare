@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import RoomsList from '@/views/components/RoomsList.vue'
-import DesksList from '@/views/components/DesksList.vue'
+import RoomsList from '@/views/components/room/RoomsList.vue'
+import DesksList from '@/views/components/desk/DesksList.vue'
 
 export default {
   data() {

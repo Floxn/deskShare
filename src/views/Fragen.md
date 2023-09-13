@@ -5,9 +5,11 @@
 
 # Allgemeine Fragen
 - Items die ich als "editierbar" gekennzeichnet habe und speichere sind beim reload bzw. nächsten Seitenaufruf weiterhin editierbar, obwohl editMode beim Speichern auf false setze. Was läuft da schief?
+- In `src/App.vue` die Struktur. Sollte nicht alles in `<router-view>` sein? Weis nun leider nicht mehr, warum ich das so gemacht habe.
 
 # Inventory List
 - da hab ich eine Blockade wie ich das am besten aufbaue.
+- Ist die .json Struktur so überhaupt richtig?
 - Die soll bei den Desk zur Auswahl stehen und auch als eigenständige Liste zum erweitern
 
 # User Account/Login
@@ -18,3 +20,6 @@
 # Aufteilung Components
 Am Beispiel Desks
 - Teilt man DeskList.vue auch noch auf und es sollte eine Desk.vue geben und diese Component sollte dann ind DeskList.vue eingebunden werden? 
+
+# Löschen
+- `src/views/components/DesksList.vue` hier hab ich das Löschen soweit wohl hinbekommen. Wie kann ein rerender provozieren?

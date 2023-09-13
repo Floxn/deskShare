@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import RoomsList from '@/views/components/RoomsList.vue'
+import RoomsList from '@/views/components/room/RoomsList.vue'
 export default {
   data() {
     return {}
