@@ -87,8 +87,8 @@ export default {
             'Content-Type': 'application/json'
           }
         })
+        // TODO braucht es hier überhaupt die const data? oder kann hier schon schluss sein?
         const data = await response.json()
-        console.log(data)
       } catch (error) {
         console.log('Fehler beim Löschen der Daten', error)
       }

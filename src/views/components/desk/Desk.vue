@@ -1,47 +1,36 @@
 <template>
-  <div class="desks">
-    <div class="desks-head">
-      <div class="desks-title">Name</div>
-      <div class="desk-displays">Displays</div>
-      <div class="desks-dockingstation">Dockingstation</div>
-      <div class="desks-special-information">Extra Info</div>
-      <div class="desks-room-id">Raum</div>
+  {{ $props.desk }}
+  <div class="desk" v-if="!deskData.editMode" @dblclick="enableEditMode(deskData.id)">
+    <h2 class="desk-title">
+      {{ deskData.name }}
+    </h2>
+    <div class="desk-displays">
+      {{ deskData.displays }}
     </div>
-    <!-- TODO Schreibt man das so mit dem <template> und dem v-if? Sieht für mich noch irgendwie komisch aus-->
-    <template v-for="desk in desksData" :key="desk.id">
-      <div class="desk" v-if="!desk.editMode" @dblclick="enableEditMode(desk)">
-        <h2 class="desk-title">
-          {{ desk.name }}
-        </h2>
-        <div class="desk-displays">
-          {{ desk.displays }}
-        </div>
-        <div class="desk-dockingstation">
-          {{ desk.dockingstation }}
-        </div>
-        <div class="desk-special-information">
-          {{ desk.specialInformation }}
-        </div>
-        <div class="desk-room-id">
-          {{ desk.roomId }}
-        </div>
-        <button class="button edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
-          edit
-        </button>
-        <button class="button delete" v-if="!desk.editMode" @click="deleteDesk(desk)">
-          delete
-        </button>
-      </div>
-      <form v-else @submit.prevent="editDesk(desk)" class="desk">
-        <input type="text" v-model="desk.name" class="desk-title" />
-        <input type="text" v-model="desk.displays" class="desk-displays" />
-        <input type="text" v-model="desk.dockingstation" class="desk-dockingstation" />
-        <input type="text" v-model="desk.specialInformation" class="desk-special-information" />
-        <input type="number" v-model="desk.roomId" class="desk-room-id" />
-        <button class="button save">save</button>
-      </form>
-    </template>
+    <div class="desk-dockingstation">
+      {{ deskData.dockingstation }}
+    </div>
+    <div class="desk-special-information">
+      {{ deskData.specialInformation }}
+    </div>
+    <div class="desk-room-id">
+      {{ deskData.roomId }}
+    </div>
+    <button class="button edit" v-if="!deskData.editMode" @click="enableEditMode(deskData.id)">
+      edit
+    </button>
+    <button class="button delete" v-if="!deskData.editMode" @click="deleteDesk(deskData.id)">
+      delete
+    </button>
   </div>
+  <form v-else @submit.prevent="editDesk(deskData.id)" class="desk">
+    <input type="text" v-model="deskData.name" class="desk-title" />
+    <input type="text" v-model="deskData.displays" class="desk-displays" />
+    <input type="text" v-model="deskData.dockingstation" class="desk-dockingstation" />
+    <input type="text" v-model="deskData.specialInformation" class="desk-special-information" />
+    <input type="number" v-model="deskData.roomId" class="desk-room-id" />
+    <button class="button save">save</button>
+  </form>
 </template>
 
 <script>
@@ -49,39 +38,32 @@ export default {
   name: 'desks-list',
   data() {
     return {
-      desksData: []
+      deskData: this.deskId
     }
   },
+  props: {
+    desk: Object
+  },
   methods: {
-    async getdesks() {
+    async editDesk(deskId) {
       try {
-        const response = await fetch('http://localhost:3000/desks')
-        const desks = await response.json()
-        this.desksData = desks
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Daten', error)
-      }
-    },
-
-    async editDesk(desk) {
-      try {
-        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+        const response = await fetch(`http://localhost:3000/desks/${deskId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(desk)
+          body: JSON.stringify(deskId)
         })
         const data = await response.json()
-        desk.editMode = false
+        deskId.editMode = false
       } catch (error) {
         console.log('Fehler beim Speichern der Daten', error)
       }
     },
 
-    async deleteDesk(desk) {
+    async deleteDesk(deskId) {
       try {
-        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+        const response = await fetch(`http://localhost:3000/desks/${deskId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
@@ -97,9 +79,6 @@ export default {
     enableEditMode(desk) {
       desk.editMode = true
     }
-  },
-  beforeMount() {
-    this.getdesks()
   }
 }
 </script>
