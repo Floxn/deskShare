@@ -16,12 +16,13 @@
         <div class="room-noiselevel">
           {{ room.noiseLevel }}
         </div>
-        <button @click.prevent="enableEditMode(room)" class="button edit">edit</button>
+        <button class="button edit" @click.prevent="enableEditMode(room)">edit</button>
+        <button class="button delete" @click="deleteRoom(room)">delete</button>
       </div>
       <form v-else @submit.prevent="editRoom(room)" class="room">
-        <input type="text" v-model="room.name" class="room-title">
-        <input type="text" v-model="room.floor" class="room-floor">
-        <input type="text" v-model="room.noiseLevel" class="room-noiselevel">
+        <input type="text" v-model="room.name" class="room-title" />
+        <input type="text" v-model="room.floor" class="room-floor" />
+        <input type="text" v-model="room.noiseLevel" class="room-noiselevel" />
         <button class="button save">save</button>
       </form>
     </template>
@@ -63,6 +64,21 @@ export default {
       }
     },
 
+    async deleteRoom(room) {
+      try {
+        const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        // TODO braucht es hier überhaupt die const data? oder kann hier schon schluss sein?
+        const data = await response.json()
+      } catch (error) {
+        console.error('Fehler beim Löschen der Daten', error)
+      }
+    },
+
     enableEditMode(room) {
       room.editMode = true
     }
@@ -78,12 +94,13 @@ export default {
 @import '@/assets/scss/mixins';
 
 .rooms {
-  --_grid-template-columns: 2fr 1fr 1fr 100px;
+  --_grid-template-columns: 2fr repeat(2, 1fr) repeat(2, 100px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-floor: 2 / 3;
   --_column-noiselevel: 3 / 4;
   --_column-button: 4 / 5;
+  --_column-btn-delete: 6 / 7;
 
   @supports (not (grid-template-columns: subgrid)) {
     display: flex;
@@ -146,7 +163,14 @@ export default {
     }
 
     button {
-      grid-column: var(--_column-button);
+      .edit,
+      .save {
+        grid-column: var(--_column-btn-edit-save);
+      }
+
+      .delete {
+        grid-column: var(--_column-btn-delete);
+      }
     }
   }
 }
