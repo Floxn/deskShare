@@ -1,6 +1,8 @@
 # deskShare
 
 This template should help get you started developing with Vue 3 in Vite.
+Uses [Feathericons](https://feathericons.com/
+) for Icons. Installed with [this Documentation](https://vuejsexamples.com/feather-icons-component-for-vue-3/)
 
 ## Recommended IDE Setup
 

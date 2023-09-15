@@ -13,9 +13,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "feather-icons": "^4.29.1",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.36",
-    "vue": "^3.3.2",
+    "vue": "^3.3.4",
+    "vue-feather": "^2.0.0",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {
