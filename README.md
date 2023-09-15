@@ -1,8 +1,8 @@
 # deskShare
 
-This template should help get you started developing with Vue 3 in Vite.
-Uses [Feathericons](https://feathericons.com/
+- Uses [Feathericons](https://feathericons.com/
 ) for Icons. Installed with [this Documentation](https://vuejsexamples.com/feather-icons-component-for-vue-3/)
+- Uses [Docker Container](https://docs.directus.io/self-hosted/docker-guide.html) for [Directus CMS](https://directus.io/) to provide the data.
 
 ## Recommended IDE Setup
 
