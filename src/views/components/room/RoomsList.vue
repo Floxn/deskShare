@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { getAll } from '@/services/api'
+
 export default {
   name: 'rooms-list',
   data() {
@@ -42,16 +44,6 @@ export default {
     }
   },
   methods: {
-    async getRooms() {
-      try {
-        const response = await fetch('http://localhost:3000/rooms')
-        const rooms = await response.json()
-        this.roomsData = rooms
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Daten', error)
-      }
-    },
-
     async editRoom(room) {
       try {
         room.editMode = false
@@ -87,7 +79,10 @@ export default {
     }
   },
   beforeMount() {
-    this.getRooms()
+    // TODO ist das so richtig?
+    ;(async () => {
+      this.roomsData = await getAll('/rooms')
+    })()
   }
 }
 </script>

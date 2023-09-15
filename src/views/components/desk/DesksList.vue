@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { getAll } from '@/services/api'
+
 export default {
   name: 'desks-list',
   data() {
@@ -53,16 +55,6 @@ export default {
     }
   },
   methods: {
-    async getdesks() {
-      try {
-        const response = await fetch('http://localhost:3000/desks')
-        const desks = await response.json()
-        this.desksData = desks
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Daten', error)
-      }
-    },
-
     async editDesk(desk) {
       try {
         desk.editMode = false
@@ -98,7 +90,10 @@ export default {
     }
   },
   beforeMount() {
-    this.getdesks()
+    // TODO ist das so richtig?
+    ;(async () => {
+      this.desksData = await getAll('/desks')
+    })()
   }
 }
 </script>
