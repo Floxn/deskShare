@@ -25,11 +25,11 @@
         <div class="desk-room-id">
           {{ desk.roomId }}
         </div>
-        <button class="button edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
-          edit
+        <button class="desk-edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
+          <vue-feather type="edit" />
         </button>
-        <button class="button delete" v-if="!desk.editMode" @click="deleteDesk(desk)">
-          delete
+        <button class="desk-delete" v-if="!desk.editMode" @click="deleteDesk(desk)">
+          <vue-feather type="trash" />
         </button>
       </div>
       <form v-else @submit.prevent="editDesk(desk)" class="desk">
@@ -38,7 +38,7 @@
         <input type="text" v-model="desk.dockingstation" class="desk-dockingstation" />
         <input type="text" v-model="desk.specialInformation" class="desk-special-information" />
         <input type="number" v-model="desk.roomId" class="desk-room-id" />
-        <button class="button save">save</button>
+        <button class="desk-save"><vue-feather type="save" /></button>
       </form>
     </template>
   </div>
@@ -65,15 +65,15 @@ export default {
 
     async editDesk(desk) {
       try {
-        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+        desk.editMode = false
+
+        await fetch(`http://localhost:3000/desks/${desk.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(desk)
         })
-        const data = await response.json()
-        desk.editMode = false
       } catch (error) {
         console.log('Fehler beim Speichern der Daten', error)
       }
@@ -81,14 +81,13 @@ export default {
 
     async deleteDesk(desk) {
       try {
-        const response = await fetch(`http://localhost:3000/desks/${desk.id}`, {
+        await fetch(`http://localhost:3000/desks/${desk.id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
           }
         })
-        // TODO braucht es hier überhaupt die const data? oder kann hier schon schluss sein?
-        const data = await response.json()
+        this.desksData = this.desksData.filter((item) => item.id !== desk.id)
       } catch (error) {
         console.log('Fehler beim Löschen der Daten', error)
       }
@@ -109,7 +108,7 @@ export default {
 @import '@/assets/scss/mixins';
 
 .desks {
-  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 100px);
+  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 35px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-displays: 2 / 3;
@@ -132,7 +131,8 @@ export default {
 
   &-head {
     display: grid;
-    grid-template-columns: var(--_grid-template-columns);
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     gap: var(--_gap);
     align-items: baseline;
     padding-bottom: calc($spacer * 0.5);
@@ -172,7 +172,7 @@ export default {
   }
 
   @supports (grid-template-columns: subgrid) {
-    grid-column: 1 / 5;
+    grid-column: 1 / -1;
     grid-template-columns: subgrid;
 
     &-title {
@@ -195,13 +195,19 @@ export default {
       grid-column: var(--_column-room-id);
     }
 
+    &-edit,
+    &-save {
+      grid-column: var(--_column-btn-edit-save);
+    }
+    &-delete {
+      grid-column: var(--_column-btn-delete);
+    }
+
     button {
-      .edit,
-      .save {
-        grid-column: var(--_column-btn-edit-save);
-      }
-      .delete {
-        grid-column: var(--_column-btn-delete);
+      &:hover,
+      &:focus-visible {
+        color: $primary-color;
+        cursor: pointer;
       }
     }
   }

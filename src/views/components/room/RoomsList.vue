@@ -16,14 +16,18 @@
         <div class="room-noiselevel">
           {{ room.noiseLevel }}
         </div>
-        <button class="button edit" @click.prevent="enableEditMode(room)">edit</button>
-        <button class="button delete" @click="deleteRoom(room)">delete</button>
+        <button class="room-edit" @click.prevent="enableEditMode(room)">
+          <vue-feather type="edit" />
+        </button>
+        <button class="room-delete" @click="deleteRoom(room)">
+          <vue-feather type="trash" />
+        </button>
       </div>
       <form v-else @submit.prevent="editRoom(room)" class="room">
         <input type="text" v-model="room.name" class="room-title" />
         <input type="text" v-model="room.floor" class="room-floor" />
         <input type="text" v-model="room.noiseLevel" class="room-noiselevel" />
-        <button class="button save">save</button>
+        <button class="room-save"><vue-feather type="save" /></button>
       </form>
     </template>
   </div>
@@ -50,15 +54,15 @@ export default {
 
     async editRoom(room) {
       try {
-        const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
+        room.editMode = false
+
+        await fetch(`http://localhost:3000/rooms/${room.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(room)
         })
-        const data = await response.json()
-        room.editMode = false
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
@@ -66,14 +70,13 @@ export default {
 
     async deleteRoom(room) {
       try {
-        const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
+        await fetch(`http://localhost:3000/rooms/${room.id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
           }
         })
-        // TODO braucht es hier überhaupt die const data? oder kann hier schon schluss sein?
-        const data = await response.json()
+        this.roomsData = this.roomsData.filter((item) => item.id !== room.id)
       } catch (error) {
         console.error('Fehler beim Löschen der Daten', error)
       }
@@ -94,12 +97,12 @@ export default {
 @import '@/assets/scss/mixins';
 
 .rooms {
-  --_grid-template-columns: 2fr repeat(2, 1fr) repeat(2, 100px);
+  --_grid-template-columns: 2fr repeat(2, 1fr) repeat(2, 35px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-floor: 2 / 3;
   --_column-noiselevel: 3 / 4;
-  --_column-button: 4 / 5;
+  --_column-btn-edit-save: 4 / 5;
   --_column-btn-delete: 6 / 7;
 
   @supports (not (grid-template-columns: subgrid)) {
@@ -115,7 +118,8 @@ export default {
 
   &-head {
     display: grid;
-    grid-template-columns: var(--_grid-template-columns);
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     gap: var(--_gap);
     align-items: baseline;
     padding-bottom: calc($spacer * 0.5);
@@ -147,7 +151,7 @@ export default {
   }
 
   @supports (grid-template-columns: subgrid) {
-    grid-column: 1 / 5;
+    grid-column: 1 / -1;
     grid-template-columns: subgrid;
 
     &-title {
@@ -162,14 +166,19 @@ export default {
       grid-column: var(--_column-noiselevel);
     }
 
-    button {
-      .edit,
-      .save {
-        grid-column: var(--_column-btn-edit-save);
-      }
+    &-edit,
+    &-save {
+      grid-column: var(--_column-btn-edit-save);
+    }
+    &-delete {
+      grid-column: var(--_column-btn-delete);
+    }
 
-      .delete {
-        grid-column: var(--_column-btn-delete);
+    button {
+      &:hover,
+      &:focus-visible {
+        color: $primary-color;
+        cursor: pointer;
       }
     }
   }

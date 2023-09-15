@@ -12,4 +12,3 @@ app.use(router)
 app.component(VueFeather.name, VueFeather)
 
 app.mount('#app')
-d

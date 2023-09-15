@@ -24,3 +24,9 @@ Am Beispiel Desks
 
 # Löschen
 - `src/views/components/DesksList.vue` hier hab ich das Löschen soweit wohl hinbekommen. Wie kann ein rerender provozieren?
+
+
+
+# API
+- Directus CMS
+- Payload CMS
