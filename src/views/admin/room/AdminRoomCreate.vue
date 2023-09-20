@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { addItem } from '@/services/api'
+
 export default {
   data() {
     return {
@@ -52,14 +54,7 @@ export default {
   methods: {
     async addRoom() {
       try {
-        const response = await fetch('http://localhost:3000/room', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.room)
-        })
-        const data = await response.json()
+        await addItem('/rooms', this.room)
         this.room.name = ''
         this.room.floor = ''
         this.room.noiseLevel = ''

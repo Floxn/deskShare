@@ -19,4 +19,45 @@ export async function getAll(path) {
   }
 }
 
-// mehr Funktionen -> getAll, getOneItem, updateItem, deleteItem
+export async function addItem(path, item) {
+  try {
+    await fetch(`http://localhost:3000${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+  } catch (error) {
+    console.error('Fehler beim Schreiben der Daten', error)
+  }
+}
+
+export async function updateItem(path, item) {
+  try {
+    await fetch(`http://localhost:3000${path}/${item.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+  } catch (error) {
+    console.error('Fehler beim Updaten der Daten', error)
+  }
+}
+
+export async function deleteItem(path, item) {
+  try {
+    await fetch(`http://localhost:3000${path}/${item.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  } catch (error) {
+    console.error('Fehler beim Löschen der Daten', error)
+  }
+}
+
+// mehr Funktionen -> getOneItem

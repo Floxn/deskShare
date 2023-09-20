@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getAll } from '@/services/api'
+import { deleteItem, getAll, updateItem } from '@/services/api'
 
 export default {
   name: 'desks-list',
@@ -58,14 +58,7 @@ export default {
     async editDesk(desk) {
       try {
         desk.editMode = false
-
-        await fetch(`http://localhost:3000/desks/${desk.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(desk)
-        })
+        await updateItem('/desks', desk)
       } catch (error) {
         console.log('Fehler beim Speichern der Daten', error)
       }
@@ -73,12 +66,7 @@ export default {
 
     async deleteDesk(desk) {
       try {
-        await fetch(`http://localhost:3000/desks/${desk.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        await deleteItem('/desks', desk)
         this.desksData = this.desksData.filter((item) => item.id !== desk.id)
       } catch (error) {
         console.log('Fehler beim Löschen der Daten', error)

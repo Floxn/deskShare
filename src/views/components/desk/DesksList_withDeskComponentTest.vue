@@ -10,13 +10,13 @@
     <!-- TODO Schreibt man das so mit dem <template> und dem v-if? Sieht für mich noch irgendwie komisch aus-->
     <template v-for="desk in desksData" :key="desk.id">
       {{ desk }}
-      <Desk deskId="{{desk}}" />
+      <DesksItem deskId="{{desk}}" />
     </template>
   </div>
 </template>
 
 <script>
-import Desk from '@/views/components/desk/Desk.vue'
+import DesksItem from '@/views/components/desk/DesksItem.vue'
 
 export default {
   name: 'desks-list',
@@ -26,7 +26,7 @@ export default {
     }
   },
   components: {
-    desk: Desk
+    DesksItem
   },
   methods: {
     async getdesks() {

@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { addItem } from '@/services/api'
+
 export default {
   data() {
     return {
@@ -68,14 +70,7 @@ export default {
   methods: {
     async addDesk() {
       try {
-        const response = await fetch('http://localhost:3000/desks', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.desk)
-        })
-        const data = await response.json()
+        await addItem('/desks', this.desk)
         this.desk.name = ''
         this.desk.displays = ''
         this.desk.dockingstation = ''

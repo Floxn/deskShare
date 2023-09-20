@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'desks-list',
+  name: 'desks-item',
   data() {
     return {
       deskData: this.deskId

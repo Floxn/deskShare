@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { getAll } from '@/services/api'
+import { getAll, updateItem, deleteItem } from '@/services/api'
 
 export default {
   name: 'rooms-list',
@@ -47,14 +47,7 @@ export default {
     async editRoom(room) {
       try {
         room.editMode = false
-
-        await fetch(`http://localhost:3000/rooms/${room.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(room)
-        })
+        await updateItem('/rooms', room)
       } catch (error) {
         console.error('Fehler beim Abrufen der Daten', error)
       }
@@ -62,12 +55,7 @@ export default {
 
     async deleteRoom(room) {
       try {
-        await fetch(`http://localhost:3000/rooms/${room.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        await deleteItem('/rooms', room)
         this.roomsData = this.roomsData.filter((item) => item.id !== room.id)
       } catch (error) {
         console.error('Fehler beim Löschen der Daten', error)
