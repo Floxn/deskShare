@@ -103,7 +103,7 @@ export default {
 @import '@/assets/scss/mixins';
 
 .desks {
-  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 35px);
+  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 45px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-displays: 2 / 3;
