@@ -23,6 +23,7 @@
       <vue-feather type="trash" />
     </button>
   </div>
+  <!-- TODO Edit funktioniert noch nicht  -->
   <form v-else @submit.prevent="editDesk(deskData.id)" class="desk">
     <input type="text" v-model="$props.deskData.name" class="desk-title" />
     <input type="text" v-model="$props.deskData.displays" class="desk-displays" />
