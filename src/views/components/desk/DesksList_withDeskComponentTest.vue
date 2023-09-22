@@ -9,14 +9,14 @@
     </div>
     <!-- TODO Schreibt man das so mit dem <template> und dem v-if? Sieht für mich noch irgendwie komisch aus-->
     <template v-for="desk in desksData" :key="desk.id">
-      {{ desk }}
-      <DesksItem deskId="{{desk}}" />
+      <DesksItem :deskData="desk" />
     </template>
   </div>
 </template>
 
 <script>
 import DesksItem from '@/views/components/desk/DesksItem.vue'
+import { getAll } from '@/services/api'
 
 export default {
   name: 'desks-list',
@@ -28,20 +28,11 @@ export default {
   components: {
     DesksItem
   },
-  methods: {
-    async getdesks() {
-      try {
-        const response = await fetch('http://localhost:3000/desks')
-        const desks = await response.json()
-        this.desksData = desks
-        console.log()
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Daten', error)
-      }
-    }
-  },
+  methods: {},
   beforeMount() {
-    this.getdesks()
+    ;(async () => {
+      this.desksData = await getAll('/desks')
+    })()
   }
 }
 </script>
@@ -51,7 +42,7 @@ export default {
 @import '@/assets/scss/mixins';
 
 .desks {
-  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 100px);
+  --_grid-template-columns: 2fr repeat(4, 1fr) repeat(2, 45px);
   --_gap: $spacer;
   --_column-title: 1 / 2;
   --_column-displays: 2 / 3;
@@ -74,7 +65,8 @@ export default {
 
   &-head {
     display: grid;
-    grid-template-columns: var(--_grid-template-columns);
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     gap: var(--_gap);
     align-items: baseline;
     padding-bottom: calc($spacer * 0.5);
