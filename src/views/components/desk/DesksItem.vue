@@ -58,7 +58,7 @@ export default {
         const formData = new FormData(event.target)
         this.$emit('update-desk-data', formData, deskId)
       } catch (error) {
-        console.log('Fehler beim Speichern der Daten', error)
+        console.error('Fehler beim Speichern der Daten', error)
       }
     },
 
@@ -66,7 +66,7 @@ export default {
       try {
         this.$emit('delete-desk', desk)
       } catch (error) {
-        console.log('Fehler beim Löschen der Daten', error)
+        console.error('Fehler beim Löschen der Daten', error)
       }
     },
 
