@@ -5,36 +5,22 @@
       <div class="rooms-floor">Stockwerk</div>
       <div class="rooms-noiselevel">Lautstärke</div>
     </div>
-    <template v-for="room in roomsData" :key="room.id">
-      <div v-if="!room.editMode" @dblclick.prevent="enableEditMode(room)" class="room">
-        <h2 class="room-title">
-          {{ room.name }}
-        </h2>
-        <div class="room-floor">
-          {{ room.floor }}
-        </div>
-        <div class="room-noiselevel">
-          {{ room.noiseLevel }}
-        </div>
-        <button class="room-edit" @click.prevent="enableEditMode(room)">
-          <vue-feather type="edit" />
-        </button>
-        <button class="room-delete" @click="deleteRoom(room)">
-          <vue-feather type="trash" />
-        </button>
-      </div>
-      <form v-else @submit.prevent="editRoom(room)" class="room">
-        <input type="text" v-model="room.name" class="room-title" />
-        <input type="text" v-model="room.floor" class="room-floor" />
-        <input type="text" v-model="room.noiseLevel" class="room-noiselevel" />
-        <button class="room-save"><vue-feather type="save" /></button>
-      </form>
+    <template v-if="roomsData.length > 0">
+      <template v-for="room in roomsData" :key="room.id">
+        <RoomsItem
+          :roomData="room"
+          @edit-mode-changed="handleEditMode"
+          @update-room-data="handleRoomData"
+          @delete-room="handleDeleteRoom"
+        />
+      </template>
     </template>
   </div>
 </template>
 
 <script>
 import { getAll, updateItem, deleteItem } from '@/services/api'
+import RoomsItem from '@/views/components/room/RoomsItem.vue'
 
 export default {
   name: 'rooms-list',
@@ -43,17 +29,42 @@ export default {
       roomsData: []
     }
   },
+  components: {
+    RoomsItem
+  },
   methods: {
-    async editRoom(room) {
-      try {
-        room.editMode = false
-        await updateItem('/rooms', room)
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Daten', error)
-      }
+    handleEditMode(id) {
+      const currentRoom = this.roomsData.find((item) => item.id === id)
+      currentRoom.editMode = true
     },
 
-    async deleteRoom(room) {
+    handleRoomData(formData, roomId) {
+      const currentRoom = this.roomsData.find((item) => item.id === roomId)
+
+      /* iterate over formData entries to get Desk updated */
+      for (const input of formData.entries()) {
+        /* TODO das tut nicht; wie kann man das eleganter schreiben */
+        /*
+        currentRoom.input[0] = input[1]
+*/
+        if (input[0] === 'name') {
+          currentRoom.name = input[1]
+        }
+
+        if (input[0] === 'floor') {
+          currentRoom.floor = input[1]
+        }
+
+        if (input[0] === 'noiseLevel') {
+          currentRoom.noiseLevel = input[1]
+        }
+      }
+      currentRoom.editMode = false
+
+      this.updateRoom(currentRoom)
+    },
+
+    async handleDeleteRoom(room) {
       try {
         await deleteItem('/rooms', room)
         this.roomsData = this.roomsData.filter((item) => item.id !== room.id)
@@ -62,12 +73,15 @@ export default {
       }
     },
 
-    enableEditMode(room) {
-      room.editMode = true
+    async updateRoom(currentRoom) {
+      try {
+        await updateItem('/rooms', currentRoom)
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten', error)
+      }
     }
   },
-  beforeMount() {
-    // TODO ist das so richtig?
+  created() {
     ;(async () => {
       this.roomsData = await getAll('/rooms')
     })()
@@ -122,48 +136,6 @@ export default {
 
   &-noiselevel {
     grid-column: var(--_column-noiselevel);
-  }
-}
-
-.room {
-  @include list-view;
-
-  @supports (not (grid-template-columns: subgrid)) {
-    grid-template-columns: var(--_grid-template-columns);
-    margin-bottom: 1rem;
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
-
-    &-title {
-      grid-column: var(--_column-title);
-    }
-
-    &-floor {
-      grid-column: var(--_column-floor);
-    }
-
-    &-noiselevel {
-      grid-column: var(--_column-noiselevel);
-    }
-
-    &-edit,
-    &-save {
-      grid-column: var(--_column-btn-edit-save);
-    }
-    &-delete {
-      grid-column: var(--_column-btn-delete);
-    }
-
-    button {
-      &:hover,
-      &:focus-visible {
-        color: $primary-color;
-        cursor: pointer;
-      }
-    }
   }
 }
 </style>
