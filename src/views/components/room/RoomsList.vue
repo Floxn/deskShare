@@ -5,8 +5,8 @@
       <div class="rooms-floor">Stockwerk</div>
       <div class="rooms-noiselevel">Lautstärke</div>
     </div>
-    <template v-if="roomsData.length > 0">
-      <template v-for="room in roomsData" :key="room.id">
+    <template v-if="roomsData.data.length > 0">
+      <template v-for="room in roomsData.data" :key="room.id">
         <RoomsItem
           :roomData="room"
           @edit-mode-changed="handleEditMode"
@@ -34,12 +34,12 @@ export default {
   },
   methods: {
     handleEditMode(id) {
-      const currentRoom = this.roomsData.find((item) => item.id === id)
+      const currentRoom = this.roomsData.data.find((item) => item.id === id)
       currentRoom.editMode = true
     },
 
     handleRoomData(formData, roomId) {
-      const currentRoom = this.roomsData.find((item) => item.id === roomId)
+      const currentRoom = this.roomsData.data.find((item) => item.id === roomId)
 
       /* iterate over formData entries to get Desk updated */
       for (const input of formData.entries()) {
@@ -47,8 +47,8 @@ export default {
         /*
         currentRoom.input[0] = input[1]
 */
-        if (input[0] === 'name') {
-          currentRoom.name = input[1]
+        if (input[0] === 'title') {
+          currentRoom.title = input[1]
         }
 
         if (input[0] === 'floor') {
@@ -67,7 +67,7 @@ export default {
     async handleDeleteRoom(room) {
       try {
         await deleteItem('/rooms', room)
-        this.roomsData = this.roomsData.filter((item) => item.id !== room.id)
+        this.roomsData.data = this.roomsData.data.filter((item) => item.id !== room.id)
       } catch (error) {
         console.error('Fehler beim Löschen der Daten', error)
       }
