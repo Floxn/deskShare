@@ -10,8 +10,7 @@ export async function baseFetch(path, options = {}) {
 
 export async function getAll(path) {
   try {
-    const response = await fetch('http://localhost:3000' + path)
-    return await response.json()
+    return await baseFetch(path)
   } catch (error) {
     console.error('Fehler beim Abrufen der Daten', error)
   }
@@ -19,7 +18,7 @@ export async function getAll(path) {
 
 export async function addItem(path, item) {
   try {
-    await fetch(`http://localhost:3000${path}`, {
+    return await baseFetch(path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,8 +31,9 @@ export async function addItem(path, item) {
 }
 
 export async function updateItem(path, item) {
+  const itemPath = `${path}/${item.id}`
   try {
-    await fetch(`http://localhost:3000${path}/${item.id}`, {
+    return await baseFetch(itemPath, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -46,8 +46,9 @@ export async function updateItem(path, item) {
 }
 
 export async function deleteItem(path, item) {
+  const itemPath = `${path}/${item.id}`
   try {
-    await fetch(`http://localhost:3000${path}/${item.id}`, {
+    return await baseFetch(itemPath, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
