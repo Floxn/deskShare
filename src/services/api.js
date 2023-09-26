@@ -1,7 +1,7 @@
 //
 export async function baseFetch(path, options = {}) {
   try {
-    const response = await fetch('http://localhost:3000' + path, options)
+    const response = await fetch('http://0.0.0.0:8055/items' + path, options)
     return await response.json()
   } catch (error) {
     console.error('Fehler beim Abrufen der Daten', error)

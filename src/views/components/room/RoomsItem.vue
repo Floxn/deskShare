@@ -1,7 +1,7 @@
 <template>
   <div v-if="!roomData.editMode" @dblclick.prevent="enableEditMode(roomData)" class="room">
     <h2 class="room-title">
-      {{ roomData.name }}
+      {{ roomData.title }}
     </h2>
     <div class="room-floor">
       {{ roomData.floor }}
@@ -17,7 +17,7 @@
     </button>
   </div>
   <form v-else @submit.prevent="editRoom($event, roomData.id)" class="room">
-    <input type="text" name="name" :value="roomData.name" class="room-title" />
+    <input type="text" name="title" :value="roomData.title" class="room-title" />
     <input type="text" name="floor" :value="roomData.floor" class="room-floor" />
     <input type="text" name="noiselevel" :value="roomData.noiseLevel" class="room-noiselevel" />
     <button class="room-save"><vue-feather type="save" /></button>
