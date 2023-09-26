@@ -64,8 +64,7 @@ export default {
 
     async deleteDesk(desk) {
       try {
-        await deleteItem('/desks', desk)
-        this.desksData = this.desksData.filter((item) => item.id !== desk.id)
+        this.$emit('delete-desk', desk)
       } catch (error) {
         console.log('Fehler beim Löschen der Daten', error)
       }

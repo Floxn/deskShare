@@ -13,6 +13,7 @@
           :deskData="desk"
           @edit-mode-changed="handleEditMode"
           @update-desk-data="handleDeskData"
+          @delete-desk="handleDeleteDesk"
         />
       </template>
     </template>
@@ -21,7 +22,7 @@
 
 <script>
 import DesksItem from '@/views/components/desk/DesksItem.vue'
-import { getAll, updateItem } from '@/services/api'
+import { deleteItem, getAll, updateItem } from '@/services/api'
 
 export default {
   name: 'desks-list',
@@ -70,6 +71,15 @@ export default {
       currentDesk.editMode = false
 
       this.updateDesk(currentDesk)
+    },
+
+    async handleDeleteDesk(desk) {
+      try {
+        await deleteItem('/desks', desk)
+        this.desksData = this.desksData.filter((item) => item.id !== desk.id)
+      } catch (error) {
+        console.error('Fehler beim Löschen der Daten', error)
+      }
     },
 
     async updateDesk(deskData) {
