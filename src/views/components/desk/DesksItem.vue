@@ -52,6 +52,7 @@ export default {
     deskData: Object
   },
   methods: {
+    /* TODO müssen die hier noch asyncron sein? Eher nicht oder? Was macht das für einen Unterschied? */
     async editDesk(event, deskId) {
       try {
         const formData = new FormData(event.target)
