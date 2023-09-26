@@ -7,45 +7,21 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
-    <!-- TODO Schreibt man das so mit dem <template> und dem v-if? Sieht für mich noch irgendwie komisch aus-->
-    <template v-for="desk in desksData" :key="desk.id">
-      <div class="desk" v-if="!desk.editMode" @dblclick="enableEditMode(desk)">
-        <h2 class="desk-title">
-          {{ desk.name }}
-        </h2>
-        <div class="desk-displays">
-          {{ desk.displays }}
-        </div>
-        <div class="desk-dockingstation">
-          {{ desk.dockingstation }}
-        </div>
-        <div class="desk-special-information">
-          {{ desk.specialInformation }}
-        </div>
-        <div class="desk-room-id">
-          {{ desk.roomId }}
-        </div>
-        <button class="desk-edit" v-if="!desk.editMode" @click="enableEditMode(desk)">
-          <vue-feather type="edit" />
-        </button>
-        <button class="desk-delete" v-if="!desk.editMode" @click="deleteDesk(desk)">
-          <vue-feather type="trash" />
-        </button>
-      </div>
-      <form v-else @submit.prevent="editDesk(desk)" class="desk">
-        <input type="text" v-model="desk.name" class="desk-title" />
-        <input type="text" v-model="desk.displays" class="desk-displays" />
-        <input type="text" v-model="desk.dockingstation" class="desk-dockingstation" />
-        <input type="text" v-model="desk.specialInformation" class="desk-special-information" />
-        <input type="number" v-model="desk.roomId" class="desk-room-id" />
-        <button class="desk-save"><vue-feather type="save" /></button>
-      </form>
+    <template v-if="desksData.length > 0">
+      <template v-for="desk in desksData" :key="desk.id">
+        <DesksItem
+          :deskData="desk"
+          @edit-mode-changed="handleEditMode"
+          @update-desk-data="handleDeskData"
+        />
+      </template>
     </template>
   </div>
 </template>
 
 <script>
-import { deleteItem, getAll, updateItem } from '@/services/api'
+import DesksItem from '@/views/components/desk/DesksItem.vue'
+import { getAll, updateItem } from '@/services/api'
 
 export default {
   name: 'desks-list',
@@ -54,31 +30,57 @@ export default {
       desksData: []
     }
   },
+  components: {
+    DesksItem
+  },
   methods: {
-    async editDesk(desk) {
-      try {
-        desk.editMode = false
-        await updateItem('/desks', desk)
-      } catch (error) {
-        console.log('Fehler beim Speichern der Daten', error)
+    handleEditMode(id) {
+      const currentDesk = this.desksData.find((item) => item.id === id)
+      currentDesk.editMode = true
+    },
+    handleDeskData(formData, deskId) {
+      const currentDesk = this.desksData.find((item) => item.id === deskId)
+
+      /* iterate over formData entries to get Desk updated */
+      for (const input of formData.entries()) {
+        /* TODO das tut nicht; wie kann man das eleganter schreiben */
+        /*
+        currentDesk.input[0] = input[1]
+*/
+        if (input[0] === 'name') {
+          currentDesk.name = input[1]
+        }
+
+        if (input[0] === 'displays') {
+          currentDesk.displays = input[1]
+        }
+
+        if (input[0] === 'dockingstation') {
+          currentDesk.dockingstation = input[1]
+        }
+
+        if (input[0] === 'specialInformation') {
+          currentDesk.specialInformation = input[1]
+        }
+
+        if (input[0] === 'roomId') {
+          currentDesk.roomId = input[1]
+        }
       }
+      currentDesk.editMode = false
+
+      this.updateDesk(currentDesk)
     },
 
-    async deleteDesk(desk) {
+    async updateDesk(deskData) {
       try {
-        await deleteItem('/desks', desk)
-        this.desksData = this.desksData.filter((item) => item.id !== desk.id)
+        await updateItem('/desks', deskData)
       } catch (error) {
-        console.log('Fehler beim Löschen der Daten', error)
+        console.error('Fehler beim Updaten der Daten', error)
       }
-    },
-
-    enableEditMode(desk) {
-      desk.editMode = true
     }
   },
-  beforeMount() {
-    // TODO ist das so richtig?
+  created() {
     ;(async () => {
       this.desksData = await getAll('/desks')
     })()
@@ -143,56 +145,6 @@ export default {
 
   &-special-information {
     grid-column: var(--_column-special-information);
-  }
-}
-
-.desk {
-  @include list-view;
-
-  @supports (not (grid-template-columns: subgrid)) {
-    grid-template-columns: var(--_grid-template-columns);
-    margin-bottom: 1rem;
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
-
-    &-title {
-      grid-column: var(--_column-title);
-    }
-
-    &-displays {
-      grid-column: var(--_column-displayss);
-    }
-
-    &-dockingstation {
-      grid-column: var(--_column-dockingstation);
-    }
-
-    &-special-information {
-      grid-column: var(--_column-special-information);
-    }
-
-    &-room-id {
-      grid-column: var(--_column-room-id);
-    }
-
-    &-edit,
-    &-save {
-      grid-column: var(--_column-btn-edit-save);
-    }
-    &-delete {
-      grid-column: var(--_column-btn-delete);
-    }
-
-    button {
-      &:hover,
-      &:focus-visible {
-        color: $primary-color;
-        cursor: pointer;
-      }
-    }
   }
 }
 </style>

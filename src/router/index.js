@@ -58,11 +58,6 @@ const router = createRouter({
       component: () => import('@/views/admin/desk/AdminDesks.vue')
     },
     {
-      path: '/admin/desksAlt',
-      name: 'admin-desksAlt',
-      component: () => import('@/views/admin/desk/AdminDesksAlt.vue')
-    },
-    {
       path: '/admin/desk/create',
       name: 'admin-desk-create',
       component: () => import('@/views/admin/desk/AdminDeskCreate.vue')

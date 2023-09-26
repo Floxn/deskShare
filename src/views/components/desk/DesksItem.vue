@@ -1,6 +1,5 @@
 <template>
-  {{ desk }}
-  <div class="desk" v-if="!deskData.editMode" @dblclick="enableEditMode(deskData.id)">
+  <div class="desk" v-if="!deskData.editMode" @dblclick="enableEditMode(deskData)">
     <h2 class="desk-title">
       {{ deskData.name }}
     </h2>
@@ -16,30 +15,35 @@
     <div class="desk-room-id">
       {{ deskData.roomId }}
     </div>
-    <button class="desk-edit" v-if="!deskData.editMode" @click="enableEditMode(deskData.id)">
+    <button class="desk-edit" v-if="!deskData.editMode" @click="enableEditMode(deskData)">
       <vue-feather type="edit" />
     </button>
-    <button class="desk-delete" v-if="!deskData.editMode" @click="deleteDesk(deskData.id)">
+    <button class="desk-delete" v-if="!deskData.editMode" @click="deleteDesk(deskData)">
       <vue-feather type="trash" />
     </button>
   </div>
-  <!-- TODO Edit funktioniert noch nicht  -->
-  <form v-else @submit.prevent="editDesk(deskData.id)" class="desk">
-    <input type="text" v-model="$props.deskData.name" class="desk-title" />
-    <input type="text" v-model="$props.deskData.displays" class="desk-displays" />
-    <input type="text" v-model="$props.deskData.dockingstation" class="desk-dockingstation" />
+  <form v-else @submit.prevent="editDesk($event, deskData.id)" class="desk">
+    <input type="text" name="name" :value="deskData.name" class="desk-title" />
+    <input type="text" name="displays" :value="deskData.displays" class="desk-displays" />
     <input
       type="text"
-      v-model="$props.deskData.specialInformation"
+      name="dockingstation"
+      :value="deskData.dockingstation"
+      class="desk-dockingstation"
+    />
+    <input
+      type="text"
+      name="specialInformation"
+      :value="deskData.specialInformation"
       class="desk-special-information"
     />
-    <input type="number" v-model="$props.deskData.roomId" class="desk-room-id" />
+    <input type="number" name="roomId" :value="deskData.roomId" class="desk-room-id" />
     <button class="desk-save"><vue-feather type="save" /></button>
   </form>
 </template>
 
 <script>
-import { deleteItem, updateItem } from '@/services/api'
+import { deleteItem } from '@/services/api'
 export default {
   name: 'desks-item',
   data() {
@@ -49,10 +53,10 @@ export default {
     deskData: Object
   },
   methods: {
-    async editDesk(desk) {
+    async editDesk(event, deskId) {
       try {
-        desk.editMode = false
-        await updateItem('/desks', desk)
+        const formData = new FormData(event.target)
+        this.$emit('update-desk-data', formData, deskId)
       } catch (error) {
         console.log('Fehler beim Speichern der Daten', error)
       }
@@ -68,7 +72,7 @@ export default {
     },
 
     enableEditMode(desk) {
-      desk.editMode = true
+      this.$emit('edit-mode-changed', desk.id)
     }
   }
 }

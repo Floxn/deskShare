@@ -17,11 +17,6 @@
         <router-link class="navigation-link" to="/admin/desks">Admin Desks</router-link>
       </li>
       <li class="navigation-item">
-        <router-link class="navigation-link" to="/admin/desksAlt"
-          >Admin Desks Alternative</router-link
-        >
-      </li>
-      <li class="navigation-item">
         <router-link class="navigation-link" to="/admin/inventory">Admin Inventory</router-link>
       </li>
       <li class="navigation-item">
