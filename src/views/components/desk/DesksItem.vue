@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { deleteItem } from '@/services/api'
 export default {
   name: 'desks-item',
   data() {
