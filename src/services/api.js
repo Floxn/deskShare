@@ -21,7 +21,8 @@ export async function addItem(path, item) {
     return await baseFetch(path, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
       },
       body: JSON.stringify(item)
     })
@@ -34,9 +35,10 @@ export async function updateItem(path, item) {
   const itemPath = `${path}/${item.id}`
   try {
     return await baseFetch(itemPath, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
       },
       body: JSON.stringify(item)
     })
@@ -51,7 +53,8 @@ export async function deleteItem(path, item) {
     return await baseFetch(itemPath, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
       }
     })
   } catch (error) {
