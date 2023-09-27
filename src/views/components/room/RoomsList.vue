@@ -5,7 +5,8 @@
       <div class="rooms-floor">Stockwerk</div>
       <div class="rooms-noiselevel">Lautstärke</div>
     </div>
-    <template v-if="roomsData.data.length > 0">
+    <!-- TODO Chaining operator -> ist das legit? Was hat das für Nachteile? -->
+    <template v-if="roomsData.data?.length > 0">
       <template v-for="room in roomsData.data" :key="room.id">
         <RoomsItem
           :roomData="room"
@@ -39,7 +40,7 @@ export default {
     },
 
     handleRoomData(formData, roomId) {
-      const currentRoom = this.roomsData.data.find((item) => item.id === roomId)
+      const currentRoom = this.roomsData.data?.find((item) => item.id === roomId)
 
       /* iterate over formData entries to get Desk updated */
       for (const input of formData.entries()) {
@@ -67,7 +68,7 @@ export default {
     async handleDeleteRoom(room) {
       try {
         await deleteItem('/rooms', room)
-        this.roomsData.data = this.roomsData.data.filter((item) => item.id !== room.id)
+        this.roomsData.data = this.roomsData.data?.filter((item) => item.id !== room.id)
       } catch (error) {
         console.error('Fehler beim Löschen der Daten', error)
       }
