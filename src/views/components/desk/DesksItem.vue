@@ -1,7 +1,7 @@
 <template>
   <div class="desk" v-if="!deskData.editMode" @dblclick="enableEditMode(deskData)">
     <h2 class="desk-title">
-      {{ deskData.name }}
+      {{ deskData.title }}
     </h2>
     <div class="desk-displays">
       {{ deskData.displays }}
@@ -23,7 +23,7 @@
     </button>
   </div>
   <form v-else @submit.prevent="editDesk($event, deskData.id)" class="desk">
-    <input type="text" name="name" :value="deskData.name" class="desk-title" />
+    <input type="text" name="name" :value="deskData.title" class="desk-title" />
     <input type="text" name="displays" :value="deskData.displays" class="desk-displays" />
     <input
       type="text"

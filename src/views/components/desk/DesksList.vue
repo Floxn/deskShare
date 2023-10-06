@@ -7,8 +7,8 @@
       <div class="desks-special-information">Extra Info</div>
       <div class="desks-room-id">Raum</div>
     </div>
-    <template v-if="desksData.length > 0">
-      <template v-for="desk in desksData" :key="desk.id">
+    <template v-if="desksData.data?.length > 0">
+      <template v-for="desk in desksData.data" :key="desk.id">
         <DesksItem
           :deskData="desk"
           @edit-mode-changed="handleEditMode"
@@ -36,20 +36,19 @@ export default {
   },
   methods: {
     handleEditMode(id) {
-      const currentDesk = this.desksData.find((item) => item.id === id)
+      const currentDesk = this.desksData.data.find((item) => item.id === id)
       currentDesk.editMode = true
     },
     handleDeskData(formData, deskId) {
-      const currentDesk = this.desksData.find((item) => item.id === deskId)
+      const currentDesk = this.desksData.data.find((item) => item.id === deskId)
 
       /* iterate over formData entries to get Desk updated */
       for (const input of formData.entries()) {
-        /* TODO das tut nicht; wie kann man das eleganter schreiben */
-        /*
+        /* TODO das tut nicht; wie kann man das eleganter schreiben
         currentDesk.input[0] = input[1]
 */
-        if (input[0] === 'name') {
-          currentDesk.name = input[1]
+        if (input[0] === 'title') {
+          currentDesk.title = input[1]
         }
 
         if (input[0] === 'displays') {
@@ -76,7 +75,7 @@ export default {
     async handleDeleteDesk(desk) {
       try {
         await deleteItem('/desks', desk)
-        this.desksData = this.desksData.filter((item) => item.id !== desk.id)
+        this.desksData = this.desksData.data.filter((item) => item.id !== desk.id)
       } catch (error) {
         console.error('Fehler beim Löschen der Daten', error)
       }
