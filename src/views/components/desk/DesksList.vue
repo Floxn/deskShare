@@ -68,7 +68,7 @@ export default {
         }
       }
       currentDesk.editMode = false
-
+      console.log(currentDesk)
       this.updateDesk(currentDesk)
     },
 
@@ -91,7 +91,7 @@ export default {
   },
   created() {
     ;(async () => {
-      this.desksData = await getAll('/desks')
+      this.desksData = await getAll('/desks/?fields=*.*,dockingstation,desk_displays.*.*')
     })()
   }
 }

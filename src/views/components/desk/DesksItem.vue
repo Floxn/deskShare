@@ -4,16 +4,16 @@
       {{ deskData.title }}
     </h2>
     <div class="desk-displays">
-      {{ deskData.displays }}
+      <vue-feather type="monitor" /> {{ deskData.desk_displays.length }}
     </div>
     <div class="desk-dockingstation">
-      {{ deskData.dockingstation }}
+      <vue-feather type="hard-drive" /> {{ deskData.dockingstation.title }}
     </div>
     <div class="desk-special-information">
       {{ deskData.specialInformation }}
     </div>
     <div class="desk-room-id">
-      {{ deskData.roomId }}
+      {{ deskData.room.title }}
     </div>
     <button class="desk-edit" v-if="!deskData.editMode" @click="enableEditMode(deskData)">
       <vue-feather type="edit" />
@@ -24,29 +24,53 @@
   </div>
   <form v-else @submit.prevent="editDesk($event, deskData.id)" class="desk">
     <input type="text" name="name" :value="deskData.title" class="desk-title" />
+    <select name="displays" class="desk-displays" multiple>
+      <option
+        v-for="display in deskData.desk_displays"
+        :key="display.displays_id.id"
+        :value="display.displays_id.title"
+      >
+        {{ display.displays_id.title }}
+      </option>
+    </select>
+    <!--
     <input type="text" name="displays" :value="deskData.displays" class="desk-displays" />
-    <input
+-->
+    <select name="dockingstation" class="desk-dockingstation">
+      <option
+        v-for="dockingstation in this.dockingstations.data"
+        :key="dockingstation.id"
+        :value="dockingstation.id"
+      >
+        {{ dockingstation.title }}
+      </option>
+    </select>
+    <!--    <input
       type="text"
       name="dockingstation"
-      :value="deskData.dockingstation"
+      :value="deskData.dockingstation.title"
       class="desk-dockingstation"
-    />
+    />-->
     <input
       type="text"
       name="specialInformation"
       :value="deskData.specialInformation"
       class="desk-special-information"
     />
-    <input type="number" name="roomId" :value="deskData.roomId" class="desk-room-id" />
+    <input type="number" name="roomId" :value="deskData.room.title" class="desk-room-id" />
     <button class="desk-save"><vue-feather type="save" /></button>
   </form>
 </template>
 
 <script>
+import { getAll } from '@/services/api'
+
 export default {
   name: 'desks-item',
   data() {
-    return {}
+    return {
+      dockingstations: []
+    }
   },
   props: {
     deskData: Object
@@ -70,8 +94,21 @@ export default {
       }
     },
 
+    async getDockingstations() {
+      try {
+        this.dockingstations = await getAll('/dockingstations')
+      } catch (error) {
+        console.error('Feler beim Laden der Daten', error)
+      }
+    },
+
     enableEditMode(desk) {
       this.$emit('edit-mode-changed', desk.id)
+      this.getDockingstations()
+    },
+
+    changeDockingstationForDesk() {
+      console.log(event.target)
     }
   }
 }
@@ -128,6 +165,12 @@ export default {
         cursor: pointer;
       }
     }
+  }
+
+  &-displays,
+  &-dockingstation {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
