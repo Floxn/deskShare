@@ -1,4 +1,3 @@
-//
 export async function baseFetch(path, options = {}) {
   try {
     const response = await fetch('http://0.0.0.0:8055/items' + path, options)
@@ -22,7 +21,7 @@ export async function addItem(path, item) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
+        authorization: `Bearer ${process.env.VUE_APP_API_BEARER_TOKEN}`
       },
       body: JSON.stringify(item)
     })
@@ -38,7 +37,7 @@ export async function updateItem(path, item) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
+        authorization: `Bearer ${process.env.VUE_APP_API_BEARER_TOKEN}`
       },
       body: JSON.stringify(item)
     })
@@ -54,7 +53,7 @@ export async function deleteItem(path, item) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer lSZTADqyORxK7eqexQ2mrYky9U_qFwY9'
+        authorization: `Bearer ${process.env.VUE_APP_API_BEARER_TOKEN}`
       }
     })
   } catch (error) {
