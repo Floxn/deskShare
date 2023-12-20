@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<!-- https://pictogrammers.com/library/mdi/   -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
+    <style>
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @font-face {
+            font-family: 'Michroma';
+            src: url("fonts/michroma-v16-latin-regular.woff2");
+        }
+
+        .btn {
+            background-color: hsl(220 55% 55%);
+            padding: .5rem;
+            &:hover {
+                background-color: hsl(220 55% 35%);
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'hsl(220 55% 55%)',
+                        base: 'hsl(0 0% 95%)',
+                        'base-dark': 'hsl(0 0% 17%)',
+                        'base-dark-lighter': 'hsl(0 0% 24%)',
+                    },
+                    fontFamily: {
+                        sans: ['Michroma', 'sans-serif'],
+                    },
+                    gridTemplateColumns: {
+                        'rooms-list': '2fr repeat(2, 1fr) repeat(2, 100px)',
+                        'desks-list': '2fr repeat(4, 1fr) repeat(2, 100px)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-base-dark flex">
+<nav class="w-2/12 bg-base-dark-lighter h-screen py-2 ">
+    <ul class="list-none flex flex-col justify-center h-screen">
+        <li>
+            <a href="index.html" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin
+            </a>
+        </li>
+        <li>
+            <a href="room.html" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Room
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Desk Create
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Rooms
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Desks
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Inventory
+            </a>
+        </li>
+    </ul>
+</nav>
+<main class="w-auto m-16">
+    <div class="flex flex-col container">
+        <h1 class="text-6xl	text-primary">Admin Dashboard</h1>
+        <div class="short-info flex gap-8 text-base mt-4">
+            <div class="short-info-item">
+                <span class="mdi mdi-monitor-multiple mr-2 text-2xl"></span>2
+            </div>
+            <div class="short-info-item">
+                <span class="mdi mdi-usb mr-2 text-2xl"></span>HP G5
+            </div>
+            <div class="short-info-item">
+                <span class="mdi mdi-swap-vertical-bold mr-2 text-2xl"></span>
+            </div>
+            <button class="ml-auto btn">asdf</button>
+        </div>
+        <div class="mt-16 mb-8">
+            <h2 class="text-4xl text-primary">Ausstattung</h2>
+        </div>
+        <div class="ausstattung text-base">
+            <div class="displays-container flex gap-8 mb-4">
+                <div class="title w-60"><span class="mdi mdi-monitor-multiple mr-2 text-2xl"></span>Monitore</div>
+                <div class="displays flex flex-col">
+                    <div class="display">27” Acer XYZ</div>
+                    <div class="display">27” Acer XYZ</div>
+                </div>
+            </div>
+            <div class="dockingstation-container flex gap-8 mb-4">
+                <div class="title w-60"><span class="mdi mdi-usb mr-2 text-2xl"></span>Dockingstation</div>
+                <div class="dockingstation">HP G5</div>
+            </div>
+            <div class="desks-container flex gap-8 mb-4">
+                <div class="title w-60"><span class="mdi mdi-swap-vertical-bold mr-2 text-2xl"></span>Schreibtisch</div>
+                <div class="desk-infos flex flex-col">
+                    <div class="desk-info">Höhenverstellbar</div>
+                    <div class="desk-info">1,5m x 60cm</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

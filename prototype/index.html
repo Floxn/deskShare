@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<!-- https://pictogrammers.com/library/mdi/   -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
+    <style>
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @font-face {
+            font-family: 'Michroma';
+            src: url("fonts/michroma-v16-latin-regular.woff2");
+        }
+
+        .btn {
+            background-color: hsl(220 55% 55%);
+            padding: .5rem;
+            &:hover {
+                background-color: hsl(220 55% 35%);
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'hsl(220 55% 55%)',
+                        base: 'hsl(0 0% 95%)',
+                        'base-dark': 'hsl(0 0% 17%)',
+                        'base-dark-lighter': 'hsl(0 0% 24%)',
+                    },
+                    fontFamily: {
+                        sans: ['Michroma', 'sans-serif'],
+                    },
+                    gridTemplateColumns: {
+                        'rooms-list': '2fr repeat(2, 1fr) repeat(2, 100px)',
+                        'desks-list': '2fr repeat(4, 1fr) repeat(2, 100px)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-base-dark flex">
+<nav class="w-2/12 bg-base-dark-lighter h-screen py-2 ">
+    <ul class="list-none flex flex-col justify-center h-screen">
+        <li>
+            <a href="index.html" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin
+            </a>
+        </li>
+        <li>
+            <a href="room.html" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Room
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Desk Create
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Rooms
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Desks
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-primary font-bold active p-2 block hover:bg-base-dark">
+                Admin Inventory
+            </a>
+        </li>
+    </ul>
+</nav>
+<main class="w-auto m-16">
+    <div class="flex flex-col container">
+        <h1 class="text-6xl	text-primary">Admin Dashboard</h1>
+        <div class="my-8">
+            <h2 class="text-4xl text-primary">Rooms</h2>
+        </div>
+        <div class="rooms grid grid-cols-rooms-list mb-4">
+            <div class="rooms-head grid grid-cols-rooms-list col-span-full gap-4 items-baseline pb-2 mb-2 text-primary">
+                <div class="rooms-title">Name</div>
+                <div class="rooms-floor">Stockwerk</div>
+                <div class="rooms-noiselevel">Lautstärke</div>
+            </div>
+            <div class="room grid grid-cols-rooms-list col-span-full gap-4 items-center text-base">
+                <h2 class="room-title text-2xl text-primary col-start-1 col-end-2">
+                    title
+                </h2>
+                <div class="room-floor col-start-2 col-end-3">
+                    floor
+                </div>
+                <div class="room-noiselevel col-start-3 col-end-4">
+                    noiseLevel
+                </div>
+                <button class="room-edit col-start-4 col-end-5 btn">
+                    edit
+                </button>
+                <button class="room-delete col-start-5 col-end-6 btn">
+                    trash
+                </button>
+            </div>
+            <hr class="m-5">
+            <form class="room grid grid-cols-rooms-list col-span-full gap-4 items-center">
+                <input type="text" name="title" value="Title" class="room-title text-primary col-start-1 col-end-2" />
+                <input type="text" name="floor" value="floor" class="room-floor col-start-2 col-end-3" />
+                <input type="text" name="noiselevel" value="noiseLevel" class="room-noiselevel col-start-3 col-end-4" />
+                <button class="room-save col-start-4 col-end-5 btn">Save</button>
+            </form>
+        </div>
+        <div class="my-8">
+            <h2 class="text-4xl text-primary">Desks</h2>
+        </div>
+        <div class="desks grid grid-cols-desks-list">
+            <div class="desks-head grid grid-cols-desks-list col-span-full gap-4 items-baseline pb-2 mb-2 text-primary">
+                <div class="desks-title">Name</div>
+                <div class="desks-room-id">Raum</div>
+                <div class="desk-displays">Displays</div>
+                <div class="desks-dockingstation">Dockingstation</div>
+                <div class="desks-special-information">Tisch</div>
+            </div>
+            <div class="desk grid grid-cols-desks-list col-span-full gap-4 items-center text-base mb-4">
+                <h2 class="desk-title text-2xl text-primary">
+                    title
+                </h2>
+                <div class="desk-room-id">desk-room-id
+                </div>
+                <div class="desk-displays">
+                    <span class="mdi mdi-monitor-multiple mr-2 text-2xl"></span>2
+                </div>
+                <div class="desk-dockingstation"><span class="mdi mdi-usb mr-2 text-2xl"></span>HP G5
+                </div>
+                <div class="desk-special-information"><span class="mdi mdi-swap-vertical-bold mr-2 text-2xl"></span>
+                </div>
+                <button class="desk-edit btn">edit
+                </button>
+                <button class="desk-delete btn">trash
+                </button>
+            </div>
+            <div class="desk grid grid-cols-desks-list col-span-full gap-4 items-center text-base mb-4">
+                <h2 class="desk-title text-2xl text-primary">
+                    title
+                </h2>
+                <div class="desk-room-id">desk-room-id
+                </div>
+                <div class="desk-displays">
+                    <span class="mdi mdi-monitor-multiple mr-2 text-2xl"></span>2
+                </div>
+                <div class="desk-dockingstation"><span class="mdi mdi-usb mr-2 text-2xl"></span>HP G5
+                </div>
+                <div class="desk-special-information"><span class="mdi mdi-minus mr-2 text-2xl"></span>
+                </div>
+                <button class="desk-edit btn">edit
+                </button>
+                <button class="desk-delete btn">trash
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
